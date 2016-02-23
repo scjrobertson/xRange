@@ -34,8 +34,11 @@ def calc_traj(p0, v0, w0, t):
     t : (n, ) ndarray
         n-many valid time instances
 
-    traj : (n, 3) ndarray
-        n-many data points on the golf balls 3D trajectory. 
+    p : (n, 3) ndarray
+        n-many position samples on the golf ball's trajectory. 
+
+    v : (n, 3) ndarray
+    	n-many velocity samples on the golf ball's trajectory.
     """
     from scipy.integrate import odeint
 
@@ -48,7 +51,7 @@ def calc_traj(p0, v0, w0, t):
     a_2 = 200000
 
     #Spin decay rate coefficient
-    r_1 = 2e-5 #4e-5*np.pi
+    r_1 = 2e-5
     
     #Air density and viscosity
     rho = 1.225
@@ -76,12 +79,19 @@ def calc_traj(p0, v0, w0, t):
     wl = f[:, 1] > 0
     
     #Swap the coordinates back
-    p = np.empty(f.shape)
+    N, _ = f.shape
+    p = np.empty((N, 3))
+    v = np.empty((N, 3))
+    
     p[:, 0] = f[:, 0]
     p[:, 1] = f[:, 2]
     p[:, 2] = f[:, 1]
 
-    return p[wl, :]
+    v[:, 1] = f[:, 3]
+    v[:, 2] = f[:, 5]
+    v[:, 2] = f[:, 4]
+
+    return t[wl], p[wl, :], v[wl, :]
 
 def ode_sys(w, t, k):
     """
