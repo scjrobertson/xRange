@@ -41,8 +41,35 @@ def range_doppler(sensors, p, v):
     
     for i in np.arange(0, M):
         u = p - sensors[i, :]
-        r_d[i, :, 0] = np.sqrt((u**2).sum(axis = 1))
+        r_d[i, :, 1] = np.sqrt((u**2).sum(axis = 1))
         u = u/(r_d[i, :, 1][:, np.newaxis])
-        r_d[i, :, 1] = np.multiply(v, u).sum(axis=1)
+        r_d[i, :, 0] = np.multiply(v, u).sum(axis=1)
 
     return r_d
+
+
+def multilateration(sensors, d):
+    '''
+    Determine the golf ball's true position in 3D cartesian coordinates using the
+    measured range data from the sensors. More than four sensor locations
+    are solve the system.
+
+    Parameters
+    ----------
+
+    sensors : (m, 3) ndarray
+        The 3D sensor locations.
+
+    d : (n, m) ndarray
+        The measure rnage information of the
+        golf ball from each of the m-many sensors
+
+    Returns
+    ----------
+    p : (n, 3) ndarray
+        The golf ball's position in 3D space.
+    '''
+
+    
+
+    return 0
