@@ -39,25 +39,26 @@ def range_doppler(sensors, p, v):
 
     r_d = np.empty((M, N, 2))
     
+    #Determine range and radial velocity as seen by each sensor
     for i in np.arange(0, M):
         u = p - sensors[i, :]
-        r_d[i, :, 1] = np.sqrt((u**2).sum(axis = 1))
+        r_d[i, :, 1] = np.linalg.norm(u, axis =1)
         u = u/(r_d[i, :, 1][:, np.newaxis])
         r_d[i, :, 0] = np.multiply(v, u).sum(axis=1)
 
     return r_d
 
 
-def multilateration(sensors, d):
+def multilateration(s, d):
     '''
     Determine the golf ball's true position in 3D cartesian coordinates using the
     measured range data from the sensors. More than four sensor locations
-    are solve the system.
+    are required solve the system.
 
     Parameters
     ----------
 
-    sensors : (m, 3) ndarray
+    s : (m, 3) ndarray
         The 3D sensor locations.
 
     d : (n, m) ndarray
@@ -69,7 +70,27 @@ def multilateration(sensors, d):
     p : (n, 3) ndarray
         The golf ball's position in 3D space.
     '''
-
     
+    #Pre-allocate a position matrix p
+    N, M = d.shape
+    p = np.empty((M, 3))
 
-    return 0
+    #Determine A and perform QR decompisition
+    A = s[1:, :] - s[0, :]
+    Q, R = np.linalg.qr(A, mode='complete')
+    R = 2*R
+
+    #Pre-define a matrix n, square values of the sensor distances
+    n = (s[1:, :]**2).sum(axis=1) - (s[0, :]**2).sum()
+    n = np.repeat(n, M).reshape((N-1, M))
+
+    #Determine the vector b and pre-multiply by Q.T
+    b = (d[0, :]**2 -d[1:, :]**2) + n
+    b = np.dot(Q.T, b)
+
+    #Determine the 3D position for each set of range measurements
+    #Is there a faster method?
+    for i in np.arange(0, M):
+        p[i, :] = np.linalg.lstsq(R, b[:, i])[0]
+    
+    return p

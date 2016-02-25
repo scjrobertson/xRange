@@ -66,12 +66,11 @@ def calc_traj(p0, v0, w0, t):
     m = 4.593e-2
 
     #Swap the coordinates
-    tmp = v0[1]
-    v0[1] = v0[2]
-    v0[2] = tmp
+    p_s0 = np.array([p0[0], p0[2], p0[1]])
+    v_s0 = np.array([v0[0], v0[2], v0[1]])
 
     #Solve the system of ODEs
-    pvw0 = np.array((p0, v0, w0)).reshape((9, ))
+    pvw0 = np.array((p_s0, v_s0, w0)).reshape((9, ))
     k = np.asarray([c_d1, c_d2, c_d3, c_l1, a_1, a_2, r_1, rho, mu, r, a, g, m])
     f = odeint(ode_sys, pvw0, t, args=(k,))
 
