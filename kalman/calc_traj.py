@@ -15,7 +15,6 @@ def calc_traj(p0, v0, w0, t):
 
     Parameters
     ----------
-
     p0 : (3, ) ndarray
         The initial position of the golf ball.
     
@@ -30,7 +29,6 @@ def calc_traj(p0, v0, w0, t):
    
     Returns
     ----------
-
     t : (n, ) ndarray
         n-many valid time instances
 
@@ -74,21 +72,12 @@ def calc_traj(p0, v0, w0, t):
     k = np.asarray([c_d1, c_d2, c_d3, c_l1, a_1, a_2, r_1, rho, mu, r, a, g, m])
     f = odeint(ode_sys, pvw0, t, args=(k,))
 
+    #Swap the coordinates back
+    p = np.array([f[:, 0], f[:, 2], f[:, 1]]).T
+    v = np.array([f[:, 3], f[:, 5], f[:, 4]]).T
+
     #Only valid where z>0
     wl = f[:, 1] > 0
-    
-    #Swap the coordinates back
-    N, _ = f.shape
-    p = np.empty((N, 3))
-    v = np.empty((N, 3))
-    
-    p[:, 0] = f[:, 0]
-    p[:, 1] = f[:, 2]
-    p[:, 2] = f[:, 1]
-
-    v[:, 0] = f[:, 3]
-    v[:, 1] = f[:, 4]
-    v[:, 2] = f[:, 5]
 
     return t[wl], p[wl, :], v[wl, :]
 
@@ -99,7 +88,6 @@ def ode_sys(w, t, k):
 
     Parameters
     ----------
-
     w : (1, 9) ndarray
         Vector of previous state variables.
         (px, py, pz, vx, vy, vz, wx, wy, wz)
@@ -113,7 +101,6 @@ def ode_sys(w, t, k):
 
     Returns
     ----------
-
     f : (1, 9) ndarray
         Vector of current state variables.
         (px, py, pz, vx, vy, vz, wx, wy, wz)

@@ -17,7 +17,6 @@ def range_doppler(sensors, p, v):
 
     Parameters
     ----------
-    
     sensors : (m, 3) ndarray
         The 3D sensor locations.
 
@@ -29,7 +28,6 @@ def range_doppler(sensors, p, v):
 
     Returns
     ----------
-
     range_doppler : (m, n, 2)
         Range-Doppler for every position of the
         ball in the given trajectory.
@@ -57,7 +55,6 @@ def multilateration(s, d):
 
     Parameters
     ----------
-
     s : (m, 3) ndarray
         The 3D sensor locations.
 
@@ -94,3 +91,44 @@ def multilateration(s, d):
         p[i, :] = np.linalg.lstsq(R, b[:, i])[0]
     
     return p
+
+def determine_velocity(t, p, r_v):
+    '''
+    Determine the linear velocity of the golf ball
+    from position and radial velocity measurements.
+
+    Currently the function differentiates position
+    measurements giving velocity.
+
+    Parameters
+    ----------
+    t : (n, ) ndarray
+        The sample intervals for the position
+        vector p
+
+    p : (n, 3) ndarray
+        The position of the golf ball in cartesian 
+        coordinates as determined by multilateration.
+
+    r_v : (n, ) ndarray
+        The radial velocity of the pall for each of the
+        sample times.
+
+    Returns
+    ----------
+    v_m : (n, 3) ndarray
+        The linear velocity of the ball
+        in cartesian coordinates.
+
+    Raises
+    ----------
+    ValueError
+        ValueError if the time, position and radial velocity 
+        vectors dimensions are inconsistent.
+    '''
+    N, _ = p.shape
+
+    if t.shape != (N, ) or t.shape != (N, 1):
+        ValueError('Dimensions are inconsistent')
+
+    return np.gradient(p, t.reshape(N, 1))[0]
