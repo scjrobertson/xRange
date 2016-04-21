@@ -1,0 +1,2 @@
+\contentsline {chapter}{\numberline {1}From Bayes Nets to Junction trees}{1}{chapter.1}
+\contentsline {chapter}{References}{2}{figure.caption.3}

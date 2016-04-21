@@ -1,0 +1,24 @@
+\chapter{Bayes Nets to Junction trees}
+
+Figure~\ref{figure:bayes_net} is the Bayes Net for the Kalman Filter. The control vector, $\mathbf{u}_t = \mathbf{u}$, may be neglected in most cases as it is a constant. Each node is a Gaussian CPD with:
+
+\input{src/bayes_net}
+
+\begin{eqnarray}
+p(\mathbf{x}_t | \mathbf{x}_{t-1}) &=& \mathcal{N}(\mathbf{x}_{t} | A \mathbf{x}_{t-1} + B\mathbf{u}, R) \label{eqn:transition} \\
+p(\mathbf{z}_t | \mathbf{x}_{t}) &=& \mathcal{N}(\mathbf{z}_{t} | C\mathbf{x}_{t}, Q) \label{eqn:measurement} \\
+p(\mathbf{x}_{0}) &=& \mathcal{N}(\mathbf{x}_{0}| \mathbf{\mu}_{0}, \Sigma_{0}) \label{eqn:belief}
+\end{eqnarray}
+
+Figure~\ref{figure:junction_tree} is the network's equivalent Junction Tree. This Junction Tree was created following the procedure given in the PGM: Week 5 notes. Moralization and triangulation shouldn't affect the structure and the induced graph should be an undirected equivalent of the Bayes Net. The maximal cliques will be allocated a single potential, corresponding to their CPDs in Equations~\ref{eqn:transition} and ~\ref{eqn:measurement}.
+
+\section{Message passing: Integral-Product algorithm}
+
+I assume that the discrete message passing algorithm is replaced with:
+
+\begin{eqnarray}
+\delta_{\phi_{\mathbf{x}_{t}} \rightarrow \phi_{\mathbf{x}_{t+1}}}(\mathbf{x}_{i}) &=& \int \phi_{\mathbf{x}_{t}}(\mathbf{x}_{t}, \mathbf{x}_{t-1}) \delta_{\mathbf{z}_{t} \rightarrow \mathbf{x}_{t}} (\mathbf{x}_{t}) \delta_{\mathbf{x}_{t} \rightarrow \mathbf{x}_{t+1}} (\mathbf{x}_{t-1}) d\mathbf{x}_{t-1} 
+\end{eqnarray}
+
+I assme the idea is to use canonical form to ease the marginalization.
+\input{src/j_tree}

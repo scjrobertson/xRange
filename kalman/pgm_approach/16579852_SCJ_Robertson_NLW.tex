@@ -1,0 +1,26 @@
+\documentclass[11pt,a4paper,notitlepage]{report}
+\usepackage[margin = 2.54 cm]{geometry}
+\input{src/preamble}
+\pagestyle{fancy}
+
+\begin{document}
+
+\begingroup
+\let\clearpage\relax
+
+	\input{src/title}
+	
+	\input{src/abstract}
+	
+	%\input{src/toc}
+	
+	\input{src/junction_trees}
+	
+	%\newpage
+	%\addcontentsline{toc}{chapter}{References}
+	%\bibliographystyle{plain}
+	%\bibliography{thebibliography}{}
+	
+\endgroup
+
+\end{document}
