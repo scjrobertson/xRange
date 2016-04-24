@@ -1,2 +1,18 @@
-\contentsline {chapter}{\numberline {1}From Bayes Nets to Junction trees}{1}{chapter.1}
-\contentsline {chapter}{References}{2}{figure.caption.3}
+\contentsline {chapter}{\numberline {1}Linear Gaussian Systems}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Bayes Net representation}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}Cluster Graph representation}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Message Passing}{2}{subsection.1.2.1}
+\contentsline {subsubsection}{Sum-Product Algorithm}{2}{section*.4}
+\contentsline {subsubsection}{Integral-Product Algorithm}{2}{section*.5}
+\contentsline {chapter}{\numberline {2}Kalman Filtering}{2}{chapter.2}
+\contentsline {section}{\numberline {2.1}Part 1: Prediction}{2}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Representation in canonical form}{3}{subsection.2.1.1}
+\contentsline {subsubsection}{The initial potential, $\phi _{\pmb {x}_t} (\pmb {x}_{t}, \pmb {x}_{t-1})$}{3}{section*.6}
+\contentsline {subsubsection}{The incoming message, $\delta _{\phi _{\pmb {x}_{t-1}} \rightarrow \phi _{\pmb {x}_{t}}} (\pmb {x}_{t-1})$}{3}{section*.7}
+\contentsline {subsection}{\numberline {2.1.2}Belief update}{4}{subsection.2.1.2}
+\contentsline {subsubsection}{Marginalisation}{4}{section*.8}
+\contentsline {subsubsection}{Simplifications}{4}{section*.9}
+\contentsline {section}{\numberline {2.2}Part 2: Measurement Update}{6}{section.2.2}
+\contentsline {chapter}{References}{7}{section.2.2}
+\contentsline {part}{Appendix}{9}{part*.15}
+\contentsline {chapter}{\numberline {A}The Canonnical Form Representation}{9}{Appendix.a.A}

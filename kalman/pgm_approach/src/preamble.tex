@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{pifont}
 \usepackage{textcomp}
+\usepackage{mdframed}
 
 %Page layout
 \usepackage{lscape}
@@ -80,3 +81,9 @@
 %Tikz settings for trees
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes, calc} 
+
+%Box for theorems
+\newmdtheoremenv{theo}{Lemma}
+
+%Number a single equation in align*
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}

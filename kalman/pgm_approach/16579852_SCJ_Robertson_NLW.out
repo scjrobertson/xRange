@@ -1,2 +1,12 @@
-\BOOKMARK [0][-]{chapter.1}{Bayes Nets to Junction trees}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Message passing: Integral-Product algorithm}{chapter.1}% 2
+\BOOKMARK [0][-]{chapter.1}{Linear Gaussian Systems}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Bayes Net representation}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Cluster Graph representation}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Message Passing}{section.1.2}% 4
+\BOOKMARK [0][-]{chapter.2}{Kalman Filtering}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Part 1: Prediction}{chapter.2}% 6
+\BOOKMARK [2][-]{subsection.2.1.1}{Representation in canonical form}{section.2.1}% 7
+\BOOKMARK [2][-]{subsection.2.1.2}{Belief update}{section.2.1}% 8
+\BOOKMARK [1][-]{section.2.2}{Part 2: Measurement Update}{chapter.2}% 9
+\BOOKMARK [0][-]{section.2.2}{References}{}% 10
+\BOOKMARK [-1][-]{part*.15}{Appendix}{}% 11
+\BOOKMARK [0][-]{Appendix.a.A}{The Canonnical Form Representation}{part*.15}% 12
