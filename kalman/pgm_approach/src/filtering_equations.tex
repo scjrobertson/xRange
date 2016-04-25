@@ -37,7 +37,7 @@ Where,
 \pmb{M}_t &= \begin{bmatrix} B\pmb{u}_t \\ \pmb{0} \end{bmatrix} \\
 P_t &= \begin{bmatrix} R^{-1} & -R^{-1} A \\ -A^{T} R^{-1} & A^{T} R^{-1} A \end{bmatrix}
 \end{align}
-Now $\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$ can be compactly represented in canonical form:
+Canonical form:
 \begin{align}
 \phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1}) &= \mathcal{N}\left( \pmb{X} | \pmb{M}, P \right) \nonumber \\
 &= \mathcal{C}_{\pmb{X}_t} \left( \pmb{X}_t ; P_t, \pmb{h}_{t}, g_{t} \right)
@@ -62,8 +62,6 @@ P_{t-1} &= \Sigma^{-1}_{t-1} \\
 \mathbf{h}_{t-1} &= \Sigma_{t-1}^{-1} \pmb{\mu}_{t-1} \\
 g_{t-1} &= \pmb{\mu}^{T} \Sigma_{t-1}^{-1} \pmb{\mu} - \ln{ \left\{ \eta_{t-1} \right\} }
 \end{align}
-
-$\eta_{t-1}$ is to address any constant multipliers. It not strictly necessary for the distribution to normalized, it is only required that it is expressible in canonical form.
  
 \subsection{Belief update}
 \label{section:belief_update}
@@ -100,17 +98,13 @@ $\eta_{t-1}$ is to address any constant multipliers. It not strictly necessary f
 
 \subsubsection{Simplifications}
 \label{subsubsection:simplification}
-
-
 \begin{align}
 \left( A^{T} R^{-1} A + \Sigma^{-1}_{t-1} \right)^{-1} &= \left( \Sigma_{t-1} - \Sigma_{t-1} A^{T} \left( R + A \Sigma_{t-1} A^{T} \right)^{-1} A \Sigma_{t-1} \right) 
 \end{align}
-
 Let,
 \begin{align}
 \overline{\Sigma}_{t} &= R + A \Sigma_{t-1} A^{T}
 \end{align}
-
 \begin{align*}
 \overline{P}_t &= R^{-1} - \left( A^{T} R^{-1} \right)^{T} \left( \Sigma_{t-1} - \Sigma_{t-1} A^{T} \left( R + A \Sigma_{t-1} A^{T} \right)^{-1} A \Sigma_{t-1} \right)  \left( A^{T} R^{-1} \right) \\
 &= R^{-1} - \left( A^{T} R^{-1} \right)^{T} \left( \Sigma_{t-1} - \Sigma_{t-1} A^{T} \overline{\Sigma}_{t}^{-1} A \Sigma_{t-1} \right)  \left( A^{T} R^{-1} \right) \\
@@ -121,12 +115,11 @@ Let,
 &= 2 R^{-1} -R^{-1} \overline{\Sigma}_{t} R^{-1} -2 R^{-1} + \overline{\Sigma}^{-1}_{t} + R^{-1} \overline{\Sigma}_{t} R^{-1} \\
 &= \overline{\Sigma}^{-1}_{t} \numberthis
 \end{align*}
-
 \begin{align*}
 \overline{\pmb{h}}_{t} &= R^{-1} B \pmb{u}_{t} + R^{-1}A \left( \Sigma_{t-1} - \Sigma_{t-1} A^{T} \left( R + A \Sigma_{t-1} A^{T} \right)^{-1} A \Sigma_{t-1} \right)  \left( -A^{T} R^{-1} B \pmb{u}_{t} + \Sigma^{-1}_{t-1} \pmb{\mu}_{t-1} \right) \\
 &= R^{-1} B \pmb{u}_{t} + R^{-1}A \left( \Sigma_{t-1} - \Sigma_{t-1} A^{T} \overline{\Sigma}_{t}^{-1}  A \Sigma_{t-1} \right)  \left( -A^{T} R^{-1} B \pmb{u}_{t} + \Sigma^{-1}_{t-1} \pmb{\mu}_{t-1} \right) \\
 &= R^{-1} B \pmb{u}_{t}  - R^{-1} \left( A \Sigma_{t-1} A^{T} \right) R^{-1} B \pmb{u}_{t} + R^{-1} \left( A \Sigma_{t-1} A^{T} \right)  \overline{\Sigma}_{t}^{-1} \left( A \Sigma_{t-1} A^{T} \right)  R^{-1} B \pmb{u}_{t} \\
-&\ + R^{-1} A \left( \Sigma_{t-1} \Sigma_{t-1}^{-1} \right) \pmb{\mu}_{t-1} - R^{-1} \left( A \Sigma_{t-1} A^{T} \right) \overline(\Sigma)^{-1}_{t} A \left( \Sigma_{t} \Sigma_{t}^{-1} \right) \pmb{\mu}_{t-1} \\
+&\ + R^{-1} A \left( \Sigma_{t-1} \Sigma_{t-1}^{-1} \right) \pmb{\mu}_{t-1} - R^{-1} \left( A \Sigma_{t-1} A^{T} \right) \overline{\Sigma}^{-1}_{t} A \left( \Sigma_{t} \Sigma_{t}^{-1} \right) \pmb{\mu}_{t-1} \\
 &= R^{-1} B \pmb{u}_{t}  - R^{-1} \left( \overline{\Sigma}_{t} - R  \right) R^{-1} B \pmb{u}_{t} + R^{-1} \left( \overline{\Sigma}_{t} - R \right)  \overline{\Sigma}_{t}^{-1} \left( \overline{\Sigma}_{t} - R \right)  R^{-1} B \pmb{u}_{t} \\
 &\ + R^{-1} A \pmb{\mu}_{t-1} - R^{-1} \left( \overline{\Sigma}_{t} - R \right) \overline{\Sigma}^{-1}_{t} A  \pmb{\mu}_{t-1} \\
 &= R^{-1} \left( A \pmb{\mu}_{t-1} + B \pmb{u}_{t} \right) - R^{-1} \left( \overline{\Sigma}_{t} - R \right) \left( I - \overline{\Sigma}^{-1}_{t} \left( \overline{\Sigma}_{t} - R \right) \right) R^{-1} B \pmb{u}_{t} - R^{-1} \left( \overline{\Sigma}_{t} - R \right) \overline{\Sigma}_{t}^{-1} A \pmb{\mu}_{t} \\
@@ -136,13 +129,13 @@ Let,
 &= \left(  R^{-1} R \right) \overline{\Sigma}^{-1}_{t} \left( A \pmb{\mu}_{t-1} + B \pmb{u}_{t} \right) \\
 &= \overline{\Sigma}^{-1}_{t} \left( A \pmb{\mu}_{t-1} + B \pmb{u}_{t} \right) \numberthis 
 \end{align*}
-
-From the definition of the information vector, it can be seen that the mean of $\Psi(\pmb{x}_t)$ is:
-\begin{align}
-\pmb{\mu}_{t} &= A \pmb{\mu}_{t-1} + B \pmb{u}_{t} 
-\end{align}
-
-
+\begin{align*}
+\overline{\pmb{h}}_{t} &= \overline{P}_{t} \overline{\pmb{\mu}}_t \\
+\therefore \overline{\pmb{\mu}}_{t} &= \overline{P}_{t}^{-1} \overline{\pmb{h}}_{t}  \\
+&= \left( \overline{\Sigma}^{-1}_{t} \overline{\Sigma}_{t} \right) \left( A \pmb{\mu}_{t-1} + B \pmb{u}_{t} \right) \\
+&= A \pmb{\mu}_{t-1} + B \pmb{u}_{t}  \numberthis
+\end{align*}
+\newpage
 \begin{theo}[Specialised Woodbury Inversion Identity\footnote{This is directly stolen, with a few added steps, from~\cite{}.}] \label{theorem:woodbury}
 For any invertible quadratic matrices $R$ and $Q$ and any matrix $P$ with appropriate dimensions, the following holds true
 \begin{align*}
@@ -168,4 +161,87 @@ This is shown through a series of transformations
 \section{Part 2: Measurement Update}
 \label{section:prediction}
 
+\subsection{Representation in canonical form}
+\label{subsection:measurement_canonical}
+\begin{align*}
+\phi_{ \pmb{z}_{t} } ( \pmb{x}_{t}, \pmb{z}_{t} )&= \mathcal{N} \left( \pmb{z}_{t} | C \pmb{x}_{t}, Q \right) \\
+&= \frac{1}{| (2 \pi )^{n} Q |^{(1/2)} } \exp{\left\{ -\frac{1}{2} \left(  \pmb{z}_{t} - C\pmb{x}_{t} \right)^{T} Q^{-1} \left(  \pmb{z}_{t} - C\pmb{x}_{t} \right) \right\} } \numberthis
+\end{align*}
+\begin{align*}
+& -\frac{1}{2} \left(  \pmb{z}_{t} - C\pmb{x}_{t} \right)^{T} Q^{-1} \left(  \pmb{z}_{t} - C\pmb{x}_{t} \right) \\
+&= \begin{bmatrix} \pmb{x}^{T}_{t} & \pmb{z}^{T}_{t} \end{bmatrix} \begin{bmatrix} C^{T} Q^{-1} C & -C^{T} Q^{-1} \\  -Q^{-1} C^{T} & Q^{-1} \end{bmatrix}
+\begin{bmatrix} \pmb{x}_{t} \\ \pmb{z}_{t} \end{bmatrix} \\
+&= \left( \pmb{Z}_{t} \right)^{T} P_{\pmb{z}_{t}} \left( \pmb{Z}_{t} \right)
+\end{align*}
+Where,
+\begin{align}
+\pmb{Z}_{t} &= \begin{bmatrix} \pmb{x}_{t} \\ \pmb{z}_{t} \end{bmatrix} \\
+P_{\pmb{z}_{t}} &= \begin{bmatrix} C^{T} Q^{-1} C & -C^{T} Q^{-1} \\  -Q^{-1} C^{T} & Q^{-1} \end{bmatrix} 
+\end{align}
+\begin{align}
+\phi_{ \pmb{z}_{t} } ( \pmb{x}_{t}, \pmb{z}_{t} )&= \mathcal{C} \left( \pmb{x}_{t}, \pmb{z}_{t} ; P_{\pmb{z}_t}, \pmb{0} , g_{\pmb{z}_t} \right) 
+\end{align}
+Where,
+\begin{align}
+g_{\pmb{z}_{t}} &= - \ln{ \left\{ |(2 \pi)^{n} Q |^{1/2} \right\} }
+\end{align}
 
+\subsubsection{Observations}
+\label{subsubsection:observations}
+\begin{align}
+\overline{P}_{\pmb{z}_{t}} &= C^{T} Q^{-1} C \\
+\overline{\pmb{h}}_{\pmb{z}_{t}} &= C^{T} Q^{-1}  \pmb{z}_{t} \\
+\overline{g}_{\pmb{z}_{t}} &= - \ln{ \left\{ |(2 \pi)^{n} Q |^{1/2} \right\} } - \frac{1}{2} \pmb{z}_{t}^{T} Q^{-1} \pmb{z}_{t}
+\end{align}
+Therefore,
+\begin{align}
+\delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) &= \phi_{ \pmb{z}_{t} } ( \pmb{x}_{t} ) = \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{x}_{t}; \overline{P}_{\pmb{z}_{t}}, \overline{\pmb{h}}_{\pmb{z}_{t}} , \overline{g}_{\pmb{z}_{t}}  \right) 
+\end{align}
+
+\subsection{The actual update}
+\label{subsection:actual_update}
+
+\begin{align*}
+\delta_{\phi_{\pmb{x}_{t}} \rightarrow \phi_{\pmb{x}_{t+1}}}(\pmb{x}_{t}) &= \delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) \cdot \Psi (\pmb{x}_{t}) \\
+&= \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{x}_{t}; \overline{P}_{\pmb{z}_{t}}, \overline{\pmb{h}}_{\pmb{z}_{t}} , \overline{g}_{\pmb{z}_{t}}  \right) \cdot \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{X}_{t}; \overline{P}_t, \overline{\pmb{h}}_{t}, \overline{g}_{t} \right) \\
+&= \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{x}_{t}; \overline{P}_t + \overline{P}_{\pmb{z}_{t}}, \overline{\pmb{h}}_{t} + \overline{\pmb{h}}_{\pmb{z}_{t}}, \overline{g}_{t} + \overline{g}_{\pmb{z}_{t}} \right) \\
+&= \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{x}_{t}; \overline{P}'_t, \overline{\pmb{h}}'_{t}, \overline{g}'_{t} \right) \numberthis
+\end{align*}
+Where,
+\begin{align}
+\overline{P}'_{t} &= \overline{\Sigma}^{-1}_{t} + C^{T} Q^{-1} C \\
+\overline{\pmb{h}}'_{t} &= C^{T} Q^{-1} \pmb{z}_{t} + \overline{\Sigma}^{-1}_{t} \overline{\pmb{\mu}}_{t}
+\end{align}
+Therefore,
+\begin{align}
+\Sigma'_{t} &= \left(  \overline{\Sigma}^{-1}_{t} + C^{T} Q^{-1} C \right)^{-1}
+\end{align}
+Using Lemma~\ref{theorem:woodbury},
+\begin{align}
+\Sigma'_{t} &= \left( \overline{\Sigma}_{t} - \overline{\Sigma}_{t}  C^{T} \left( Q + C \overline{\Sigma}_{t} C^{T} \right)^{-1} C \overline{\Sigma}_{t}  \right) 
+\end{align}
+Let,
+\begin{align}
+K_{t} &= \overline{\Sigma}_{t}  C^{T} \left( Q + C \overline{\Sigma}_{t} C^{T} \right)^{-1} \\
+\therefore \Sigma'_{t} &= \left( I - K_{t} C \right) \overline{\Sigma}_{t}
+\end{align}
+Now,
+\begin{align*}
+\overline{\pmb{h}}'_{t} &=  \Sigma'^{-1}_{t} \overline{\pmb{\mu}}'_t \\
+\therefore \overline{\pmb{\mu}}'_{t} &= \Sigma'_{t} \overline{\pmb{h}}'_{t}  \\
+&= \left( I - K_{t} C \right) \overline{\Sigma}_{t} \left( C^{T} Q^{-1} \pmb{z}_{t} + \overline{\Sigma}^{-1}_{t} \overline{\pmb{\mu}}_{t} \right) \\
+&= \left( I - K_{t} C \right) \overline{\Sigma}_{t} C^{T} Q^{-1} \pmb{z}_{t} + \left( I - K_{t} C \right) \left( \overline{\Sigma}_{t} \overline{\Sigma}^{-1}_{t} \right) \overline{\pmb{\mu}}_{t} \\
+&=  \left( I - K_{t} C \right) \overline{\Sigma}_{t} C^{T} Q^{-1} \pmb{z}_{t} + \left( I - K_{t} C \right)  \overline{\pmb{\mu}}_{t} \numberthis
+\end{align*}
+Side step,
+\begin{align*}
+& K_{t} = \overline{\Sigma}_{t}  C^{T} \left( Q + C \overline{\Sigma}_{t} C^{T} \right)^{-1} \\
+& K_{t}  \left( Q + C \overline{\Sigma}_{t} C^{T} \right) = \overline{\Sigma}_{t}  C^{T} \\
+& K_{t} Q = \overline{\Sigma}_{t} C^{T} - K_{t} C \overline{\Sigma}_{t} C^{T}  \numberthis
+\end{align*}
+Now,
+\begin{align*}
+\overline{\pmb{\mu}}'_{t} &= \left( \overline{\Sigma}_{t} C^{T} - K_{t} C \overline{\Sigma}_{t} C^{T} \right) Q^{-1} \pmb{z}_{t} + \left( I - K_{t} C \right)  \overline{\pmb{\mu}}_{t} \\
+&= K_{t} \left( Q Q^{-1} \right) \pmb{z}_{t} + \overline{\pmb{\mu}}_{t} - K_{t} C \overline{\pmb{\mu}}_{t} \\
+&= \overline{\pmb{\mu}_{t}} + K_{t} \left( \overline{\pmb{\mu}}_{t} - C \pmb{z}_{t} \right)
+\end{align*}
