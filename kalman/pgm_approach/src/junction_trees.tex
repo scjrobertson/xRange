@@ -1,22 +1,102 @@
 \chapter{Linear Gaussian Systems}
 \label{chapter:linear_gaussian}
 
-\section{Bayes Net representation}
+The following three conditions are sufficient, in addition to the Markov assumption, to ensure that the belief, $p \left( \pmb{x}_{t} \right)$, of the system is always Gaussian~\cite{Thrun_rec, Thrun_gauss}:
+
+\begin{enumerate}
+\item The state transition probability $p(\pmb{x}_{t} | \pmb{x}_{t-1}, \pmb{u}_{t})$ is a linear function in its arguments, with added Gaussian noise.
+\begin{align}
+\pmb{x}_{t} &= A_{t} \pmb{x}_{t-1} + B_{t} \pmb{u}_{t} + \pmb{\epsilon}_{t}
+\end{align}
+$A_{t}$ and $B_{t}$ are $n \times n$ and $m \times n$ matrices respectively, with $n$ being the dimension of the sate vector. $\pmb{\epsilon}_t$ is a Gaussian random vector which accounts for the uncertainty introduced during state transition, it is zero mean with a covariance matrix $R_{t}$. The state transition probability is now given as:
+\begin{align*}
+& p(\pmb{x}_{t} | \pmb{x}_{t-1}, \pmb{u}_{t}) = \mathcal{N} \left( \pmb{x}_{t} | A \pmb{x}_{t-1} + B \pmb{u}_{t}, R_{t} \right) \\
+&= \frac{1}{ | (2 \pi)^{n} R |^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right)^{T} R_{t}^{-1} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right) \right\} } \label{eqn:trans_prob} \numberthis
+\end{align*}
+\item The measurement probability, $p \left( \pmb{z}_{t} | \pmb{x}_{t} \right)$, must also be linear in its arguments, with added Gaussian Noise:
+\begin{align}
+\pmb{z}_{t} &= C_{t} \pmb{x}_{t} + \pmb{\delta}_{t}
+\end{align}
+$C_{t}$ is $k \times n$ matrix, $\pmb{z}_{t}$ being $k$ dimensional. $\pmb{\delta}_{t}$ is zero mean Gaussian noise with a covariance of $Q_{t}$. $p \left( \pmb{z}_{t} | \pmb{x}_{t} \right)$ is now defined as:
+\begin{align*}
+& p(\pmb{z}_{t} | \pmb{x}_{t}) = \mathcal{N} \left( \pmb{z}_{t} | C_{t} \pmb{x}_{t}, Q_{t} \right) \\
+&= \frac{1}{ | (2 \pi)^{k} Q |^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - C_{t} \pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left( \pmb{z}_{t} - C_{t} \pmb{x}_{t}\right) \right\} } \label{eqn:mes_prob}  \numberthis
+\end{align*}
+\item The belief about the initial state, $p \left( \pmb{x}_{0} \right)$, must be normally distributed:
+\begin{align*}
+& p(\pmb{z}_{t} | \pmb{x}_{t}) = \mathcal{N} \left( \pmb{x}_{0} | \pmb{\mu}_{t} , \Sigma_{t} \right) \\
+\end{align*}
+\end{enumerate}
+\begin{remark}
+This entire section was shamelessly stolen from~\cite{Thrun_gauss}, but it's necessary to restate all of this to establish the ground rule and define some notation.
+\end{remark}
+
+\section{Bayes Net Representation}
 \label{section:bayes_net}
+\begin{definition}[Bayesian Network]
+A Bayesian Network is a distribution of the form:
+\begin{align}
+p\left(\pmb{x}_{1}, \cdots, \pmb{x}_{N}\right) &= p\left(\pmb{x}^{N}_{0} \right) = \prod^{N}_{i=1} p\left(x_{i} | \mbox{pa} (\pmb{x}_{i}) \right)
+\label{eqn:bayes_net_def}
+\end{align}
+where $\mbox{pa} \left( x_{i} \right) $ are the \textbf{parental} variables of $x_{i}$. It is represented naturally as a directed graph, with a directed edge from the parent to its child. The $j^{th}$ node corresponds to the factor $p\left(\pmb{x}_{j} | \mbox{pa} (\pmb{x}_{j}) \right)$~\cite{Koller_bayes_net, Barber_belief_net}.
+\end{definition}
+The Kalman Filter can be represented as a joint density function of all random variables $\pmb{x}^{t}_{0}$ and $\pmb{z}^{t}_{1}$, without any loss of generality\footnote{Okay, I'm not sure if this is true, but I've always wanted to say it.}. This allows the following factorisation:
+\begin{align*}
+p \left( \pmb{x}_{0}^{t}, \pmb{z}_{1}^{t}, \pmb{u}_{1}^{t} \right) &= p\left( \pmb{z}_{t} | \pmb{x}_{t}, \pmb{z}_{1}^{t-1}, \pmb{u}_{1}^{t} \right) p \left( \pmb{x}_{0}^{t}, \pmb{z}_{1}^{t-1}, \pmb{u}_{1}^{t} \right) \\
+&= p\left( \pmb{z}_{t} | \pmb{x}_{t}, \pmb{z}_{1}^{t-1}, \pmb{u}_{1}^{t}\right) p \left( \pmb{x}_{0}^{t} | \pmb{x}_{0}^{t-1},  \pmb{z}_{1}^{t-1}, \pmb{u}_{1}^{t} \right) p \left( \pmb{x}_{0}^{t-1}, \pmb{z}_{1}^{t-1}, \pmb{u}_{1}^{t-1} \right) \label{eqn:bayes_rec} \numberthis
+\end{align*}
+Applying the Markov assumption to Equation~\ref{eqn:bayes_rec} and then following the recursion to its conclusion, results in:
+\begin{align}
+p \left( \pmb{x}_{0}^{t}, \pmb{z}_{1}^{t}, \pmb{u}_{1}^{t} \right) &= p \left( \pmb{x}_{0} \right) \prod^{t}_{i=1} p \left( \pmb{z}_{i} | \pmb{x}_{i} \right) p \left( \pmb{x}_{i} | \pmb{x}_{i-1}, \pmb{u}_{t} \right) \label{eqn:kalman_factor}
+\end{align}
+The form of Equation~\ref{eqn:kalman_factor} is exactly that of Equation~\ref{eqn:bayes_net_def} allowing the Kalman Filter to be represented naturally as a Bayes Net, as seen in Figure~\ref{figure:bayes_net}. 
+\begin{remark}
+The representation of Equation~\ref{eqn:kalman_factor} is misleading. The control vector, $\pmb{u}_{t}$, is not a random variable, it is deterministic and known in each state. 
+\end{remark}
+
 
 \input{src/bayes_net}
 
-\section{Cluster Graph representation}
+\section{Junction Tree Representation}
 \label{section:cluster_graph}
+The Junction Tree Algorithm is a form of tree decomposition which seeks to eliminate cycles in a graph by clustering them into a single node. With the cycles removed  it is possible to perform exact inference, avoiding any iterative message passing schemes.
+
+\begin{remark}
+I was going to define clusters graphs, the generalised running intersection property and then arrive at clique trees, but it seemed daunting. Also pointless, considering I'm the only person who will ever read this and any definitions I give will just be rehashed versions of those given by Koller and Barber.
+\end{remark}
+
+
+\subsection{Junction Tree Construction: The Hugin Algorithm}
+\label{subsection:jtree_construction}
+The Hugin algorithm provides a procedure for constructing a Junction tree from some general graph~\cite{Du_Preez_week5}:
+
+\begin{enumerate}
+\item If the graph if directed, moralize it. Moralization will produce the equivalent undirected form of the graph, preserving the underlying probabilistic dependencies.
+\item Triangulate the graph using variable elimination, this will produce the induced graph. Elimination ordering determines the density of the induced graph, an ordering is sought which will introduce the least amount of fill edges.
+\item Identify all maximal cliques in the induced graph, the variables in cliques are then assigned to this \textit{supernode}.
+\item Allocate each potential from the original graph to exactly one of these \textit{super} nodes. The \textit{supernode} is simply a product of all of its associated potentials.
+\item Find a maximal spanning tree over all the \textit{supernodes}.
+\end{enumerate}
+
+\subsubsection{Application to the Kalman Filter}
+\label{section:kalman_filter}
+The Kalman Filter's Bayes Net representation is already a tree, therefore its decomposition is trivial. Moralization introduces no new edges as all child nodes only have a single parent. The variable elimination orderings are also trivial, the leaf nodes can eliminated in any order and will also introduce no fill edges into the induced graph. The remaining chain structure only has two possible elimination orderings, forwards or backwards, both are perfect and introduce no fill edges. All maximal cliques comprise of a single node corresponding to the existing potential in the Bayes Net. The maximal spanning tree is the existing tree as sepsets are single variable sets, $\pmb{S}_{i, j} = \pmb{C}_{i} \cap \pmb{C}_{j} = \{ \pmb{x}_{i} \} $.
+
+The Junction Tree equivalent of Figure~\ref{figure:bayes_net} can be seen in Figure~\ref{figure:junction_tree}.
 
 \input{src/j_tree}
 
-\subsection{Message Passing}
+\subsection{Message Passing: Integral-Product Algorithm}
 \label{subsection:message_passing}
+ 
+\begin{definition} [Integral-Product Message Passing] \label{def:int_prod}
+In a cluster graph, $\mathcal{T}$, defined for a set of continuous factors $\Phi$ over $\mathcal{X}$, the message from a cluster $\pmb{C}_{i}$ to an adjacent cluster $\pmb{C}_{j}$ is computed using the \textbf{integral-product message passing} computation:
+\begin{align}
+\delta_{i \rightarrow j} &= \int \psi_{i} \left( \prod_{k \in \left( \mbox{Nb}_{i} - \{ j \} \right)} \delta_{k \rightarrow i} \right) d\{ {\pmb{C}_{i} - \pmb{S}_{i, j}} \} \label{eqn:int_prod}
+\end{align}
+Here $\psi_{i}$ is the potential assigned to $\pmb{C}_{i}$ and $\mbox{Nb}_{i}$ are all clusters adjacent to it~\cite{Barber_junction_tree, Koller_clique_trees, Koller_canonical}.
+\end{definition}
+From Definition~\ref{def:int_prod} it can be seen that the Junction Tree algorithm does not necessarily simplify inference, with its larger nodes the work of iterative message passing is simply shifted to this integral.
 
 
-\subsubsection{Sum-Product Algorithm}
-\label{subsubsection:sum-product}
-
-\subsubsection{Integral-Product Algorithm}
-\label{subsubsection:Integral-product}

@@ -1,0 +1,22 @@
+\newpage
+\begin{theo}[Specialised Woodbury Inversion Identity\footnote{This is directly stolen, with a few added steps, from~\cite{Thrun_gauss}.}] \label{theorem:woodbury}
+For any invertible quadratic matrices $R$ and $Q$ and any matrix $P$ with appropriate dimensions, the following holds true
+\begin{align*}
+(R + P Q P^{T} )^{-1} &= R^{-1} - R^{-1} P (Q^{-1} + P^{T} R^{-1} P)^{-1} P^{T} R^{-1}
+\end{align*}
+\noindent \textbf{Proof}: Define $\Psi = (Q^{-1} + P^{T} R^{-1} P )^{-1}$. It suffices to show that
+\begin{align*}
+(R^{-1} - R^{-1} P \Psi P^{T} R^{-1})(R + P Q P) &= I 
+\end{align*}
+This is shown through a series of transformations
+\begin{align*}
+&= R^{-1} R - R^{-1} P Q P^{T} - R^{-1} P \Psi P^{T} R^{-1} R + R^{-1} P \Psi P^{T} R^{-1} P Q P^{T}  \\ 
+&= I + R^{-1} P Q P^{T} - R^{-1} P \Psi P^{T} - R^{-1} P \Psi P^{T} R^{-1} P Q P^{T}  \\
+&= I + R^{-1} P \left[ Q P^{T} - \Psi P^{T} - \Psi P^{T} R^{-1} P Q P^{T} \right]  \\
+&= I + R^{-1} P \left[ Q P^{T} - \Psi Q^{-1} Q P^{T} - \Psi P^{T} R^{-1} P Q P^{T} \right]  \\
+&= I + R^{-1} P \left[ Q P^{T} - \Psi \left[ Q^{-1} + P^{T} R^{-1} P \right] Q P^{T} \right]  \\
+&= I + R^{-1} P \left[ Q P^{T} - \Psi \Psi^{-1} Q P^{T} \right] \\
+&= I + R^{-1} P \left[ I - I \right] Q P^{T}  \\
+&= I \nonumber
+\end{align*}
+\end{theo}

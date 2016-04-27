@@ -1,0 +1,7 @@
+\begin{definition}[Cluster Graph]
+A \textbf{cluster graph} for a set of factors $\Phi$ over $\mathcal{X}$ is an undirected graph, with each node $i$ associated  with a subset $\pmb{C}_{i} \subseteq \mathcal{X}$. A cluster graph must be \textbf{family preserving} - each factor $\phi \in \Phi$ must be associated with cluster $\pmb{C}_{i}$, such that $\mbox{Scope}[ \phi ] \subseteq \pmb{C}_{i} $. Each edge between clusters $\pmb{C}_{i}$ and $\pmb{C}_{j}$ is associated with a sepset $\pmb{S}_{i, j} \subseteq \pmb{C}_{i} \cap \pmb{C}_{j} $~\cite{Koller_clique_trees, Barber_junction_tree}.
+\end{definition}
+
+\begin{definition}[Running Intersection Property]
+A cluster graph $\mathcal{T}$, defined over a set of factors $\phi$. The vertices of $\mathcal{T}$ are denoted by $\mathcal{V}_{\mathcal{T}}$ and its edges by $\mathcal{E}_{\mathcal{T}}$. $\mathcal{T}$ satisfies the \textbf{running itersection property} if, whenever there is varaible $X$ such that $X \in \pmb{C}_{i}$ and $X \in \pmb{C}_{j}$, then there is a single path between $\pmb{C}_{i}$ and $\pmb{C}_{j}$ for which $X \in \pmb{S}_{e}$ for all edges $e$ in the path~\cite{Koller_clique_trees, Barber_junction_tree}.
+\end{definition}

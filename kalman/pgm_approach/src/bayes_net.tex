@@ -2,6 +2,8 @@
 \centering
 \begin{tikzpicture}
 \begin{scope}[every node/.style={circle,thick,draw}]
+	\node (x0) at (-2.5,0) {$\mathbf{x}_{0}$};
+
     \node (x1) at (0,0) {$\mathbf{x}_{1}$};
     \node (z1) at (0, -2.5) {$\mathbf{z}_{1}$};
     
@@ -22,6 +24,8 @@
 
 
 \begin{scope}[style={thick,draw}]
+	\path [->] (x0) edge node {} (x1);
+
     \path [->] (x1) edge node {} (z1);
     \path [->] (x1) edge node {} (x2);
     
@@ -38,6 +42,6 @@
 
 \end{tikzpicture}
 
-\caption[A Bayes Net for a Kalman Filter.]{A Bayes Net for a linear Kalman filter.}
+\caption[A Bayes Net for a Kalman Filter.]{A Bayes Net for a Kalman filter. For brevity's sake, the control vector, $\pmb{u}_{t}$ has been omitted  as it is deterministic and known in each state.}
 \label{figure:bayes_net}
 \end{figure}

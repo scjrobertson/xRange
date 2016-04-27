@@ -1,0 +1,48 @@
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=0.80]
+\begin{scope}[every node/.style={circle,thick,draw}]
+    \node (xt) at (0, 0) {$\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$};
+    \node (zt) at (0, -5) {$\phi_{\pmb{z}_t} (\pmb{z}_{t}, \pmb{x}_{t})$};
+\end{scope}
+
+\begin{scope}[every node/.style={thick,draw}]
+	\node (sx{t-1}) at (-2.5, 0) {$\pmb{x}_{t-1}$};
+    \node (sxt) at (2.5, 0) {$\pmb{x}_{t}$};
+    \node (szt) at (0, -2.5) {$\pmb{z}_{t}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot0) at (-5,0) {\dots};
+    \node (xdot1) at (5,0) {\dots};
+    
+    \node (a0t0) at (-5, 1.5) {};
+    \node (a1t0) at (-2.5, 1.5) {};
+    
+    \node (a0t1) at (2.5, 1.5) {};
+    \node (a1t1) at (5, 1.5) {};
+    
+    \node (a0z1) at (1.5, -3.5) {};
+    \node (a1z1) at (1.5, -1) {};
+    
+\end{scope}
+
+\begin{scope}[style={thick,draw}]	
+	\path [-] (sx{t-1}) edge node {} (xt);
+	\path [-] (xt) edge node {} (sxt);
+	\path [-] (xt) edge node {} (szt);
+	\path [-] (szt) edge node {} (zt);
+	
+	\path [-] (xdot0) edge node {} (sx{t-1});
+	\path [-] (sxt) edge node {} (xdot1);
+	
+	\path [->, above] (a0t0) edge node {$\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}}$} (a1t0);
+	\path [->, above] (a0t1) edge node {$\delta_{\phi_{\pmb{x}_{t}} \rightarrow \phi_{\pmb{x}_{t+1}}}$} (a1t1);
+	\path [->, right] (a0z1) edge node {$\delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}}$} (a1z1);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[Message passing in a Kalman Filter.]{Message passing in a Kalman Filter.}
+\label{figure:message_passing}
+\end{figure}
