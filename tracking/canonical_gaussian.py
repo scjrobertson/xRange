@@ -15,7 +15,8 @@ class CanonicalGaussian:
 
     This representation makes use of matrix multiplication
     to align variables and expand scopes. This is computationally
-    expensive, but conceptually easy.
+    expensive, but conceptually easy. Not a great representation, but
+    I couldn't find an exisiting canonical form representation in python.
 
     This class doesn't yet handle any value errors or check
     dimensional consistency.
@@ -44,7 +45,7 @@ class CanonicalGaussian:
 
     Example
     ----------
-    >>> print('To be completed.')
+    >>> print('To be completed, look at tracking.ipynb for now.')
     '''
     def __init__(self, vars_, dims, info, prec, norm):
         self._vars = list(vars_)
@@ -222,7 +223,7 @@ class CanonicalGaussian:
 
         Parameters
         ----------
-        C : CanonicalGaussian
+        C : CanonicalGaussian or float
             The multiplicand.
         
         Returns
@@ -230,13 +231,33 @@ class CanonicalGaussian:
         C : CanonicalGaussian
             The product of the two Gaussians.
         '''
-        map_ = dict(zip(self._vars + C._vars, self._dims + C._dims))
-        glob_vars, glob_dims = list(map_.keys()), list(map_.values())
+        if isinstance(C, CanonicalGaussian):
+            map_ = dict(zip(self._vars + C._vars, self._dims + C._dims))
+            glob_vars, glob_dims = list(map_.keys()), list(map_.values())
 
-        K_1, h_1 = self._expand_scope(glob_vars, glob_dims)
-        K_2, h_2 = C._expand_scope(glob_vars, glob_dims)
+            K_1, h_1 = self._expand_scope(glob_vars, glob_dims)
+            K_2, h_2 = C._expand_scope(glob_vars, glob_dims)
 
-        return CanonicalGaussian(glob_vars, glob_dims, h_1 + h_2, K_1 + K_2, self._norm + C._norm)
+            return CanonicalGaussian(glob_vars, glob_dims, h_1 + h_2, K_1 + K_2, self._norm + C._norm)
+        else:
+            return CanonicalGaussian(self._vars, self._dims, self._info, self._prec, self._norm + np.log(C))
+
+
+    def __rmul__(self, C):
+        '''
+        Overloads reverse multiplication.
+
+        Parameters
+        ----------
+        C : CanonicalGaussian or float
+            The multiplicand.
+        
+        Returns
+        ----------
+        C : CanonicalGaussian
+            The product of the two Gaussians.
+        '''
+        return self.__mul__(C)
 
     def __truediv__(self, C):
         '''
@@ -252,14 +273,17 @@ class CanonicalGaussian:
         C : CanonicalGaussian
             The quotient of the two Gaussians.
         '''
-        map_ = dict(zip(self._vars + C._vars, self._dims + C._dims))
-        glob_vars = list(map_.keys())
-        glob_dims = list(map_.values())
+        if isinstance(C, CanonicalGaussian):
+            map_ = dict(zip(self._vars + C._vars, self._dims + C._dims))
+            glob_vars = list(map_.keys())
+            glob_dims = list(map_.values())
 
-        K_1, h_1 = self._expand_scope(glob_vars, glob_dims)
-        K_2, h_2 = C._expand_scope(glob_vars, glob_dims)
+            K_1, h_1 = self._expand_scope(glob_vars, glob_dims)
+            K_2, h_2 = C._expand_scope(glob_vars, glob_dims)
 
-        return CanonicalGaussian(glob_vars, glob_dims, h_1 - h_2, K_1 - K_2, self._norm - C._norm)
+            return CanonicalGaussian(glob_vars, glob_dims, h_1 - h_2, K_1 - K_2, self._norm - C._norm)
+        else:
+            return CanonicalGaussian(self._vars, self._dims, self._info, self._prec, self._norm - np.log(C))
 
 def block_permutation(rows, columns, dimensions):
     '''
@@ -292,6 +316,11 @@ def where(list_, arg):
         A list of variables.
     arg : int
         The variables values
+
+    Returns
+    ----------
+    i : int
+        The index of the first element equal to arg.
     '''
     for i in np.arange(0, len(list_)):
         if list_[i] == arg:
@@ -300,7 +329,7 @@ def where(list_, arg):
 def exchange(list_, x, y):
     '''
     A helper function to exchange two positions
-    in a array.
+    in an array.
 
     Parameters
     ----------
