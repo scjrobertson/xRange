@@ -2,8 +2,8 @@
 \centering
 \begin{tikzpicture}[scale=0.80]
 \begin{scope}[every node/.style={circle,thick,draw}]
-    \node (xt) at (0, 0) {$\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$};
-    \node (zt) at (0, -5) {$\phi_{\pmb{z}_t} (\pmb{z}_{t}, \pmb{x}_{t})$};
+    \node (xt) at (0, 0) {$\phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1})$};
+    \node (zt) at (0, -5) {$\phi_{\pmb{z}(t)} (\pmb{z}_{t}, \pmb{x}_{t})$};
 \end{scope}
 
 \begin{scope}[every node/.style={thick,draw}]
@@ -36,9 +36,9 @@
 	\path [-] (xdot0) edge node {} (sx{t-1});
 	\path [-] (sxt) edge node {} (xdot1);
 	
-	\path [->, above] (a0t0) edge node {$\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}}$} (a1t0);
-	\path [->, above] (a0t1) edge node {$\delta_{\phi_{\pmb{x}_{t}} \rightarrow \phi_{\pmb{x}_{t+1}}}$} (a1t1);
-	\path [->, right] (a0z1) edge node {$\delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}}$} (a1z1);
+	\path [->, above] (a0t0) edge node {$\delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)}(\pmb{x}_{t-1})$} (a1t0);
+	\path [->, above] (a0t1) edge node {$\delta_{\pmb{x}(t) \rightarrow \pmb{x}(t+1)}(\pmb{x}_{t})$} (a1t1);
+	\path [->, right] (a0z1) edge node {$\delta_{\pmb{z}(t) \rightarrow \pmb{x}(t)}(\pmb{x}_{t})$} (a1z1);
 \end{scope}
 
 \end{tikzpicture}

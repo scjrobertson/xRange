@@ -11,7 +11,7 @@ The following three conditions are sufficient, in addition to the Markov assumpt
 $A_{t}$ and $B_{t}$ are $n \times n$ and $m \times n$ matrices respectively, with $n$ being the dimension of the sate vector. $\pmb{\epsilon}_t$ is a Gaussian random vector which accounts for the uncertainty introduced during state transition, it is zero mean with a covariance matrix $R_{t}$. The state transition probability is now given as:
 \begin{align*}
 & p(\pmb{x}_{t} | \pmb{x}_{t-1}, \pmb{u}_{t}) = \mathcal{N} \left( \pmb{x}_{t} | A \pmb{x}_{t-1} + B \pmb{u}_{t}, R_{t} \right) \\
-&= \frac{1}{ | (2 \pi)^{n} R |^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right)^{T} R_{t}^{-1} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right) \right\} } \label{eqn:trans_prob} \numberthis
+&= \frac{1}{ (2 \pi)^{n/2} |R|^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right)^{T} R_{t}^{-1} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} + B \pmb{u}_{t} \right) \right\} } \label{eqn:trans_prob} \numberthis
 \end{align*}
 \item The measurement probability, $p \left( \pmb{z}_{t} | \pmb{x}_{t} \right)$, must also be linear in its arguments, with added Gaussian Noise:
 \begin{align}
@@ -20,7 +20,7 @@ $A_{t}$ and $B_{t}$ are $n \times n$ and $m \times n$ matrices respectively, wit
 $C_{t}$ is $k \times n$ matrix, $\pmb{z}_{t}$ being $k$ dimensional. $\pmb{\delta}_{t}$ is zero mean Gaussian noise with a covariance of $Q_{t}$. $p \left( \pmb{z}_{t} | \pmb{x}_{t} \right)$ is now defined as:
 \begin{align*}
 & p(\pmb{z}_{t} | \pmb{x}_{t}) = \mathcal{N} \left( \pmb{z}_{t} | C_{t} \pmb{x}_{t}, Q_{t} \right) \\
-&= \frac{1}{ | (2 \pi)^{k} Q |^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - C_{t} \pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left( \pmb{z}_{t} - C_{t} \pmb{x}_{t}\right) \right\} } \label{eqn:mes_prob}  \numberthis
+&= \frac{1}{ (2 \pi)^{k/2}|Q|^{1/2} } \exp{\left\{ -\frac{1}{2} \left( \pmb{x}_{t} - C_{t} \pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left( \pmb{z}_{t} - C_{t} \pmb{x}_{t}\right) \right\} } \label{eqn:mes_prob}  \numberthis
 \end{align*}
 \item The belief about the initial state, $p \left( \pmb{x}_{0} \right)$, must be normally distributed:
 \begin{align*}
@@ -28,7 +28,7 @@ $C_{t}$ is $k \times n$ matrix, $\pmb{z}_{t}$ being $k$ dimensional. $\pmb{\delt
 \end{align*}
 \end{enumerate}
 \begin{remark}
-This entire section was shamelessly stolen from~\cite{Thrun_gauss}, but it's necessary to restate all of this to establish the ground rule and define some notation.
+This entire section was shamelessly stolen from~\cite{Thrun_gauss}, but it's necessary to restate all of this to establish the ground rules and introduce some notation. The notation quickly becomes an unbearable mess from this point onwards.
 \end{remark}
 
 \section{Bayes Net Representation}
@@ -67,9 +67,9 @@ I was going to define clusters graphs, the generalised running intersection prop
 \end{remark}
 
 
-\subsection{Junction Tree Construction: The Hugin Algorithm}
+\subsection{Junction Tree Construction: The HUGIN Algorithm}
 \label{subsection:jtree_construction}
-The Hugin algorithm provides a procedure for constructing a Junction tree from some general graph~\cite{Du_Preez_week5}:
+The HUGIN algorithm provides a procedure for constructing a Junction tree from some general graph~\cite{Du_Preez_week5}:
 
 \begin{enumerate}
 \item If the graph if directed, moralize it. Moralization will produce the equivalent undirected form of the graph, preserving the underlying probabilistic dependencies.
@@ -81,7 +81,7 @@ The Hugin algorithm provides a procedure for constructing a Junction tree from s
 
 \subsubsection{Application to the Kalman Filter}
 \label{section:kalman_filter}
-The Kalman Filter's Bayes Net representation is already a tree, therefore its decomposition is trivial. Moralization introduces no new edges as all child nodes only have a single parent. The variable elimination orderings are also trivial, the leaf nodes can eliminated in any order and will also introduce no fill edges into the induced graph. The remaining chain structure only has two possible elimination orderings, forwards or backwards, both are perfect and introduce no fill edges. All maximal cliques comprise of a single node corresponding to the existing potential in the Bayes Net. The maximal spanning tree is the existing tree as sepsets are single variable sets, $\pmb{S}_{i, j} = \pmb{C}_{i} \cap \pmb{C}_{j} = \{ \pmb{x}_{i} \} $.
+The Kalman Filter's Bayes Net representation is already a tree, therefore its decomposition is trivial. Moralization introduces no new edges as all child nodes only have a single parent. The variable elimination orderings are also trivial, the leaf nodes can eliminated in any order and will also introduce no fill edges into the induced graph. The remaining chain structure only has two possible elimination orderings, forwards or backwards, both are perfect and introduce no fill edges. All maximal cliques comprise of a adjacent parings of nodes, which only need to assigned a single potential. The maximal spanning tree is the existing tree as sepsets are single variable sets, $\pmb{S}_{i, j} = \pmb{C}_{i} \cap \pmb{C}_{j} = \{ \pmb{x}_{i} \} $.
 
 The Junction Tree equivalent of Figure~\ref{figure:bayes_net} can be seen in Figure~\ref{figure:junction_tree}.
 

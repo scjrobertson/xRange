@@ -1,0 +1,21 @@
+\begin{thebibliography}{}
+\bibitem{Barber_belief_net} D. Barber. `Belief Networks' in \textit{Bayesian Reasoning and Machine Learning}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, U.K: Cambridge University Press, 2012, pp. 29-58.
+
+\bibitem{Barber_graphical_models} D. Barber. `Graphical Models' in \textit{Bayesian Reasoning and Machine Learning}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, U.K: Cambridge University Press, 2012, pp. 58-77.
+
+\bibitem{Barber_junction_tree} D. Barber. `The Junction Tree Algorithm' in \textit{Bayesian Reasoning and Machine Learning}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, U.K: Cambridge University Press, 2012, pp. 102-127.
+
+\bibitem{Du_Preez_week5} J. Du Preez. `Inference: The Junction-Tree Algorithm'. Internet: \url{http://research.ee.sun.ac.za/pgms/instructions/week5_junctiontree.pdf}, 2016 [Apr. 26, 2016].
+
+\bibitem{Koller_bayes_net} D. Koller and N. Friedman. `The Bayesian Network Representation' in \textit{Probabilistic Graphical Models: Principles and Techniques}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, Massachusetts: The MIT Press, 2009, pp. 45-83.
+
+\bibitem{Koller_clique_trees} D. Koller and N. Friedman. `Exact Inference' in \textit{Probabilistic Graphical Models: Principles and Techniques}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, Massachusetts: The MIT Press, 2009, pp. 345-376.
+
+\bibitem{Koller_canonical} D. Koller and N. Friedman. `Inference in Hybrid Networks' in \textit{Probabilistic Graphical Models: Principles and Techniques}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, Massachusetts: The MIT Press, 2009, pp. 609-611.
+
+\bibitem{Thrun_rec} S. Thrun et al. `Recursive State Estimation' in \textit{Probabilistic Robotics}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, Massachusetts: The MIT Press, 2009, pp. 14-35.
+
+\bibitem{Thrun_gauss} S. Thrun et al. `Gaussian Filters' in \textit{Probabilistic Robotics}, $1^{\mbox{st}}$ ed., vol. 1. Cambridge, Massachusetts: The MIT Press, 2009, pp. 39-53.
+
+	
+\end{thebibliography}

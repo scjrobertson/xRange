@@ -1,0 +1,93 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\begin{document}
+
+\begin{tikzpicture}
+
+\begin{scope}[every node/.style={circle,thick,draw}]
+	
+	%Depth 0
+	\node (z_1^1) at (0, 0) {$\pmb{z}_{1}^{1}$};
+	
+	%Depth 1
+	\node (z_2^1) at (-4, -2) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (4,-2) {$\pmb{z}_{2}^{2}$};
+	
+	%Depth 2
+	\node (z_3^1_l) at (-6, -4) {$\pmb{z}_{3}^{1}$};
+	\node (z_3^2_l) at (-2, -4) {$\pmb{z}_{3}^{2}$};
+
+	\node (z_3^1_r) at (2, -4) {$\pmb{z}_{3}^{1}$};
+	\node (z_3^2_r) at (6,-4) {$\pmb{z}_{3}^{2}$};
+	
+	%Depth n
+	
+	\node (z_n^1_1) at (-8, -8) {$\pmb{z}_{n}^{1}$};
+	\node (z_n^2_1) at (-5.714, -8) {$\pmb{z}_{n}^{2}$};
+	
+	\node (z_n^1_2) at (-3.423, -8) {$\pmb{z}_{n}^{1}$};
+	\node (z_n^2_2) at (-1.143, -8) {$\pmb{z}_{n}^{2}$};
+
+	\node (z_n^1_3) at (1.43, -8) {$\pmb{z}_{n}^{1}$};
+	\node (z_n^2_3) at (3.423,- 8) {$\pmb{z}_{n}^{2}$};
+	
+	\node (z_n^1_4) at (5.7142, -8) {$\pmb{z}_{n}^{1}$};
+	\node (z_n^2_4) at (8,- 8) {$\pmb{z}_{n}^{2}$};
+
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Depth 3
+	    \node (xdot1) at (-4, -6) {\dots \dots \dots};
+        \node (xdot2) at (4, -6) {\dots \dots \dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Depth 0
+	\path [-, thick, red] (z_1^1) edge node {} (z_2^1);
+	\path [-] (z_1^1) edge node {} (z_2^2);
+	
+	%Depth 1
+	\path [-] (z_2^1) edge node {} (z_3^1_l);
+	\path [-, thick, red] (z_2^1) edge node {} (z_3^2_l);
+	
+	\path [-] (z_2^2) edge node {} (z_3^1_r);
+	\path [-] (z_2^2) edge node {} (z_3^2_r);
+	
+	%Depth 2
+	\path [-] (z_3^1_l) edge node {} (-6.5, -4.5);
+	\path [-] (z_3^1_l) edge node {} (-5.5, -4.5);
+	
+	\path [-, thick, red] (z_3^2_l) edge node {} (-2.5, -4.5);
+	\path [-] (z_3^2_l) edge node {} (-1.5, -4.5);
+	
+	\path [-] (z_3^1_r) edge node {} (1.5, -4.5);
+	\path [-] (z_3^1_r) edge node {} (2.5, -4.5);
+	
+	\path [-] (z_3^2_r) edge node {} (6.5, -4.5);
+	\path [-] (z_3^2_r) edge node {} (5.5, -4.5);
+	
+	%Depth n
+	\path [-] (-7.5, -7.5) edge node {} (z_n^1_1);
+	\path [-] (-5.714 - 0.5, -7.5) edge node {} (z_n^2_1);
+	
+	\path [-] (-3.423 + 0.5, -7.5) edge node {} (z_n^1_2);
+	\path [-, thick, red] (-1.143 - 0.5, -7.5) edge node {} (z_n^2_2);
+	
+	\path [-] (1.143 + 0.75, -7.5) edge node {} (z_n^1_3);
+	\path [-] (3.423 - 0.5, -7.5) edge node {} (z_n^2_3);
+	
+	\path [-] (5.714 + 0.5, -7.5) edge node {} (z_n^1_4);
+	\path [-] (7.5, -7.5) edge node {} (z_n^2_4);
+	
+	\path [<->, left] (-10, 0.5) edge node {$n-1$} (-10, -8.5);
+	\path [<->, below] (-8.5, -9) edge node {$2^{n-1}$} (8.5, -9);
+
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

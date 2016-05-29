@@ -6,8 +6,8 @@ The current state estimate, $p\left( \pmb{x}_{t} \right)$, is equivalent to the 
 \input{src/message_passing}
 
 \begin{align}
-\delta_{\phi_{\pmb{x}_{t}} \rightarrow \phi_{\pmb{x}_{t+1}}}(\pmb{x}_{t}) &= \int \phi_{\pmb{x}_{t}}(\pmb{x}_{t}, \pmb{x}_{t-1}) \delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) \delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1}) d\pmb{x}_{t-1} \nonumber \\
-&= \underbrace{ \delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) }_\text{\textit{Measurement update}} \underbrace{ \int \phi_{\pmb{x}_{t}}(\pmb{x}_{t}, \pmb{x}_{t-1})  \delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1}) d\pmb{x}_{t-1} }_\text{\textit{Prediction}} \label{eqn:state}
+\delta_{\pmb{x}(t) \rightarrow \pmb{x}(t+1)}(\pmb{x}_{t}) &= \int \phi_{\pmb{x}(t)}(\pmb{x}_{t}, \pmb{x}_{t-1}) \delta_{\pmb{z}(t) \rightarrow \pmb{x}(t)} (\pmb{x}_{t})  \delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1}) d\pmb{x}_{t-1} \nonumber \\
+&= \underbrace{ \delta_{\pmb{z}(t) \rightarrow \pmb{x}(t)} (\pmb{x}_{t}) }_\text{\textit{Measurement update}} \underbrace{ \int \phi_{\pmb{x}(t)}(\pmb{x}_{t}, \pmb{x}_{t-1})  \delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1}) d\pmb{x}_{t-1} }_\text{\textit{Prediction}} \label{eqn:state}
 \end{align}
 
 \begin{remark}
@@ -19,20 +19,20 @@ The notation in Equation~\ref{eqn:state} is unwieldy, but I couldn't think of an
 Basically, evaluating this equation:
 
 \begin{align}
-\Psi(\pmb{x}_{t}) &= \int \phi_{\pmb{x}_{t}}(\pmb{x}_{t}, \pmb{x}_{t-1})  \delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1}) d\pmb{x}_{t-1}  \label{eqn:rec_bel}
+\Psi(\pmb{x}_{t}) &= \int \phi_{\pmb{x}(t)}(\pmb{x}_{t}, \pmb{x}_{t-1})  \delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1}) d\pmb{x}_{t-1}  \label{eqn:rec_bel}
 \end{align}
 
 \subsection{Canonical Form Representation}
 \label{subsection:canonical}
 Canonical form representation is consistent with~\cite{Koller_canonical}.
 
-\subsubsection{The Initial Belief, $\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$}
+\subsubsection{The Initial Belief, $\phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1})$}
 \label{subsubsection:initial_pot}
 
-The potential, $\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$, is the CPD:
+The potential, $\phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1})$, is the CPD:
 \begin{align}
-& \phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1}) = \mathcal{N}\left(\pmb{x}_{t} | A_{t} \pmb{x}_{t-1} + B_{t} \pmb{x}_{t-1}, R_{t} \right) \nonumber \\
- &= \frac{1}{ | (2 \pi)^{n} R_{t} |^{1/2} } \exp{ \{ -\frac{1}{2} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} - B_{t} \pmb{x}_{t-1} \right)^{T} R_{t}^{-1} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} - B_{t} \pmb{x}_{t-1} \right)\} }
+& \phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1}) = \mathcal{N}\left(\pmb{x}_{t} | A_{t} \pmb{x}_{t-1} + B_{t} \pmb{x}_{t-1}, R_{t} \right) \nonumber \\
+ &= \frac{1}{ (2 \pi)^{n/2}| R_{t} |^{1/2} } \exp{ \{ -\frac{1}{2} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} - B_{t} \pmb{x}_{t-1} \right)^{T} R_{t}^{-1} \left( \pmb{x}_{t} - A_{t} \pmb{x}_{t-1} - B_{t} \pmb{x}_{t-1} \right)\} }
 \end{align}
 It can be rearranged as a joint density function as follows:
 \begin{align}
@@ -48,32 +48,32 @@ P_t &= \begin{bmatrix} R_{t}^{-1} & -R_{t}^{-1} A_{t} \\ -A_{t}^{T} R_{t}^{-1} &
 \end{align}
 The joint density can now be easily represented in canonical form:
 \begin{align}
-\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1}) &= \mathcal{N}\left( \pmb{X} | \pmb{M}, P \right) \nonumber \\
+\phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1}) &= \mathcal{N}\left( \pmb{X} | \pmb{M}, P \right) \nonumber \\
 &= \mathcal{C} \left( \pmb{x}_t, \pmb{x}_{t-1} ; P_t, \pmb{h}_{t}, g_{t} \right)
 \end{align}
 Where, 
 \begin{align}
 \pmb{h}_{t} &= P_{t} \pmb{M}_{t} \\
-g_{t} &= \pmb{M}^{T} P \pmb{M} - \ln{ \left\{ | (2 \pi)^{n} R_{t} |^{1/2} \right\} }
+g_{t} &= -\frac{1}{2} \pmb{M}^{T}_{t} P_{t} \pmb{M}_{t} - \ln{ \left\{ (2 \pi)^{n/2} | R_{t} |^{1/2} \right\} }
 \end{align}
 \begin{remark}
 I introduced $\pmb{X}_{t}$ just to show the new arrangement was in quadratic form, I find it easier to show full scope in canonical form  so I don't lose track of anything.
 \end{remark}
 
-\subsubsection{The Recursive Belief, $\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1})$}
+\subsubsection{The Recursive Belief, $\delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1})$}
 \label{subsubsection:rec_bel}
 
-$\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1})$ is some unknown distribution which can be represented generally in canonical form:
+$\delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1})$ is some unknown distribution which can be represented generally in canonical form:
 \begin{align}
-\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1}) &= \mathcal{C}\left( \pmb{x}_{t-1}; P_{t-1}, \pmb{h}_{t}, g_{t-1} \right) 
+\delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1})&= \mathcal{C}\left( \pmb{x}_{t-1}; P_{t-1}, \pmb{h}_{t}, g_{t-1} \right) 
 \end{align}
 Where, 
 \begin{align}
 P_{t-1} &= \Sigma^{-1}_{t-1} \\
 \mathbf{h}_{t-1} &= \Sigma_{t-1}^{-1} \pmb{\mu}_{t-1} \\
-g_{t-1} &= \pmb{\mu}^{T} \Sigma_{t-1}^{-1} \pmb{\mu} - \ln{ \left\{ | (2 \pi)^{n} \Sigma_{t-1} |^{1/2} \right\} }
+g_{t-1} &= -\frac{1}{2}\pmb{\mu}^{T} \Sigma_{t-1}^{-1} \pmb{\mu} - \ln{ \left\{ (2 \pi)^{n/2} | \Sigma_{t-1} |^{1/2} \right\} }
 \end{align}
-Since $\delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1})$'s scope is a subset of $\phi_{\pmb{x}_t} (\pmb{x}_{t}, \pmb{x}_{t-1})$'s, its variables must be augmented with zeros:
+Since $  \delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1}) $'s scope is a subset of $\phi_{\pmb{x}(t)} (\pmb{x}_{t}, \pmb{x}_{t-1})$'s, its variables must be augmented with zeros:
 \begin{align}
 P'_{t-1} &= \begin{bmatrix} 0 & -0 \\ 0 &  \Sigma^{-1}_{t-1} \end{bmatrix}\\
 \mathbf{h}'_{t-1} &= \begin{bmatrix} \pmb{0} \\ \Sigma_{t-1}^{-1} \pmb{\mu}_{t-1} \end{bmatrix} 
@@ -84,10 +84,10 @@ P'_{t-1} &= \begin{bmatrix} 0 & -0 \\ 0 &  \Sigma^{-1}_{t-1} \end{bmatrix}\\
 \label{section:belief_update}
 
 \begin{align}
-\phi_{\pmb{x}_{t}}(\pmb{x}_{t}, \pmb{x}_{t-1})  \delta_{\phi_{\pmb{x}_{t-1}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t-1}) &= 
-\mathcal{C} \left( \pmb{X}_t ; P_t, \pmb{h}_{t}, g_{t} \right) \cdot \mathcal{C} \left( \pmb{X}'_{t-1}; P'_{t-1}, \pmb{h}'_{t}, g_{t-1} \right) \nonumber \\
-&= \mathcal{C} \left( \pmb{X}_{t}; P_{t} + P'_{t-1}, \pmb{h}_{t} + \pmb{h}'_{t-1}, g_{t} + g_{t-1} \right) \nonumber \\
-&= \mathcal{C} \left( \pmb{X}_{t}; \hat{P}_{t}, \hat{\pmb{h}}_{t}, \hat{g}_{t} \right) 
+\phi_{\pmb{x}(t)}(\pmb{x}_{t}, \pmb{x}_{t-1}) \delta_{\pmb{x}(t-1) \rightarrow \pmb{x}(t)} (\pmb{x}_{t-1}) &= 
+\mathcal{C} \left( \pmb{x}_t, \pmb{x}_{t-1} ; P_t, \pmb{h}_{t}, g_{t} \right) \cdot \mathcal{C} \left( \pmb{x}_{t-1}; P'_{t-1}, \pmb{h}'_{t}, g_{t-1} \right) \nonumber \\
+&= \mathcal{C} \left( \pmb{x}_t, \pmb{x}_{t-1}; P_{t} + P'_{t-1}, \pmb{h}_{t} + \pmb{h}'_{t-1}, g_{t} + g_{t-1} \right) \nonumber \\
+&= \mathcal{C} \left( \pmb{x}_t, \pmb{x}_{t-1}; \hat{P}_{t}, \hat{\pmb{h}}_{t}, \hat{g}_{t} \right) 
 \end{align}
 \begin{align}
 \hat{P}_{t} &= P_{t} + P'_{t-1} \nonumber  \\ 
@@ -97,7 +97,7 @@ P'_{t-1} &= \begin{bmatrix} 0 & -0 \\ 0 &  \Sigma^{-1}_{t-1} \end{bmatrix}\\
 &= \begin{bmatrix} R_{t}^{-1} B_{t} \pmb{u}_{t} \\ - A_{t}^{T} R_{t}^{-1} B_{t} \pmb{u}_{t}  \end{bmatrix} + \begin{bmatrix} \pmb{0} \\ \Sigma_{t-1}^{-1} \pmb{\mu}_{t-1} \end{bmatrix} \nonumber \\
 &= \begin{bmatrix} R_{t}^{-1} B_{t} \pmb{u}_{t} \\ - A_{t}^{T} R_{t}^{-1} B_{t} \pmb{u}_{t} + \Sigma_{t-1}^{-1} \pmb{\mu}_{t-1} \end{bmatrix} \\
 \hat{g}_{t} &= g_{t} + g_{t-1} \nonumber \\
-&=  \pmb{M}^{T} P \pmb{M} - \ln{ \left\{ | (2 \pi)^{n} R_{t} |^{1/2} \right\} } + \pmb{\mu}^{T} \Sigma_{t-1}^{-1} \pmb{\mu} -\ln{ \left\{ | (2 \pi)^{n} \Sigma_{t-1} |^{1/2} \right\} }
+&=  -\frac{1}{2}\pmb{M}_{t}^{T} P \pmb{M}_{t} - \ln{ \left\{  (2 \pi)^{n/2} |R_{t} |^{1/2} \right\} } + \pmb{\mu}^{T} \Sigma_{t-1}^{-1} \pmb{\mu} -\ln{ \left\{ (2 \pi)^{n/2} | \Sigma_{t-1} |^{1/2} \right\} }
 \end{align}
 
 \subsubsection{Marginalisation}
@@ -124,7 +124,7 @@ Then letting,
 \overline{\Sigma}_{t} &= R_{t} + A_{t} \Sigma_{t-1} A_{t}^{T}
 \end{align}
 \begin{remark}
-If you don't follow the preceding steps, you will end with a perfectly valid set of equations but they won't be identical to the Kalman Filter Algorithm defined in~\cite{Thrun_rec, Thrun_gauss}, which isn't as rewarding. Or something, I don't really know at his point.
+If you don't follow the preceding steps, you will end with a perfectly valid set of equations but they won't be identical to the standard Kalman Filter Algorithm (defined in~\cite{Thrun_rec, Thrun_gauss}), which isn't as rewarding. 
 \end{remark}
 Simplifying Equation~\ref{eqn:p_direct}
 \begin{align*}
@@ -187,7 +187,7 @@ This is shown through a series of transformations
 \label{section:prediction}
 The state estimate is finally completed by incorporating the current measurement, $\pmb{z}_{E, t}$.
 \begin{align}
-\delta_{\phi_{\pmb{x}_{t}} \rightarrow \phi_{\pmb{x}_{t+1}}}(\pmb{x}_{t}) &= \delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) \cdot \Psi (\pmb{x}_{t}) 
+\delta_{\pmb{z}(t) \rightarrow \pmb{x}(t)} (\pmb{x}_{t}) &= \delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) \cdot \Psi (\pmb{x}_{t}) 
 \end{align}
 
 \subsection{Canonical From Representation}
@@ -195,7 +195,7 @@ The state estimate is finally completed by incorporating the current measurement
 Once again a CPD is rearranged into a joint density:
 \begin{align*}
 \phi_{ \pmb{z}_{t} } ( \pmb{x}_{t}, \pmb{z}_{t} )&= \mathcal{N} \left( \pmb{z}_{t} | C_{t} \pmb{x}_{t}, Q_{t} \right) \\
-&= \frac{1}{| (2 \pi )^{n} Q_{t} |^{(1/2)} } \exp{\left\{ -\frac{1}{2} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right) \right\} } \numberthis
+&= \frac{1}{(2 \pi)^{k/2}| Q_{t} |^{(1/2)} } \exp{\left\{ -\frac{1}{2} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right) \right\} } \numberthis
 \end{align*}
 \begin{align*}
 & -\frac{1}{2} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right)^{T} Q_{t}^{-1} \left(  \pmb{z}_{t} - C_{t}\pmb{x}_{t} \right) \\
@@ -214,7 +214,7 @@ Resulting in the zero mean distribution,
 \end{align}
 Where,
 \begin{align}
-g_{\pmb{z}_{t}} &= - \ln{ \left\{ |(2 \pi)^{n} Q_{t} |^{1/2} \right\} }
+g_{\pmb{z}_{t}} &= - \ln{ \left\{ (2 \pi)^{k/2} | Q_{t} |^{1/2} \right\} }
 \end{align}
 
 \subsubsection{Observations}
@@ -223,11 +223,11 @@ The measurement of the current state is made, $\pmb{z}_{t} = \pmb{z}_{E, t}$. Ac
 \begin{align}
 \widetilde{P}_{\pmb{z}_{t}} &= C_{t}^{T} Q_{t}^{-1} C_{t} \\
 \widetilde{\pmb{h}}_{\pmb{z}_{t}} &= C_{t}^{T} Q_{t}^{-1}  \pmb{z}_{E, t} \\
-\widetilde{g}_{\pmb{z}_{t}} &= - \ln{ \left\{ |(2 \pi)^{n} Q_{t} |^{1/2} \right\} } - \frac{1}{2} \pmb{z}_{t}^{T} Q_{t}^{-1} \pmb{z}_{t}
+\widetilde{g}_{\pmb{z}_{t}} &= - \ln{ \left\{ (2 \pi)^{k/2} | Q_{t} |^{1/2} \right\} } - \frac{1}{2} \pmb{z}_{t}^{T} Q_{t}^{-1} \pmb{z}_{t}
 \end{align}
 Therefore,
 \begin{align}
-\delta_{\phi_{\pmb{z}_{t}} \rightarrow \phi_{\pmb{x}_{t}}} (\pmb{x}_{t}) &= \phi_{ \pmb{z}_{t} } ( \pmb{x}_{t} ) = \mathcal{C}_{\pmb{x}_{t}} \left( \pmb{x}_{t}; \overline{P}_{\pmb{z}_{t}}, \overline{\pmb{h}}_{\pmb{z}_{t}} , \overline{g}_{\pmb{z}_{t}}  \right) 
+\delta_{\pmb{z}(t) \rightarrow \pmb{x}(t)} (\pmb{x}_{t}) &= \phi_{ \pmb{z}(t) } ( \pmb{x}_{t} ) = \mathcal{C} \left( \pmb{x}_{t}; \overline{P}_{\pmb{z}_{t}}, \overline{\pmb{h}}_{\pmb{z}_{t}} , \overline{g}_{\pmb{z}_{t}}  \right) 
 \end{align}
 
 \subsection{Update and Simplifications}
@@ -242,7 +242,7 @@ Finally, the measurement update is performed:
 Where,
 \begin{align}
 \overline{P}_{t} &= \overline{\Sigma}^{-1}_{t} + C_{t}^{T} Q_{t}^{-1} C_{t} \\
-\overline{\pmb{h}}_{t} &= C_{t}^{T} Q_{t}^{-1} \pmb{z}_{t} + \overline{\Sigma}^{-1}_{t} \overline{\pmb{\mu}}_{t}
+\overline{\pmb{h}}_{t} &= C_{t}^{T} Q_{t}^{-1} \pmb{z}_{E, t} + \overline{\Sigma}^{-1}_{t} \overline{\pmb{\mu}}_{t}
 \end{align}
 The precision matrix, $\overline{P}_{t}$, is defined as the inverse of the covariance matrix, therefore:
 \begin{align}
@@ -278,5 +278,5 @@ Now,
 &= \widetilde{\pmb{\mu}_{t}} + K_{t} \left( \widetilde{\pmb{\mu}}_{t} - C_{t} \pmb{z}_{E, t} \right) \numberthis
 \end{align*}
 \begin{remark}
-You may notice I have neglected the scalar $\overline{g}_{t}$, it didn't really contain any of the really interesting equations. I assume it evaluates to a valid normalization constant as we have operated in a linear Gaussian system. Or something.
+You may notice I have neglected the scalar $\overline{g}_{t}$, it didn't really contain any of the really interesting equations. I assume it evaluates to a valid normalization constant as we have operated in a linear Gaussian system.
 \end{remark}

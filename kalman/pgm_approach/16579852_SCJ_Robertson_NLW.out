@@ -1,12 +1,13 @@
 \BOOKMARK [0][-]{chapter.1}{Linear Gaussian Systems}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Bayes Net representation}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Cluster Graph representation}{chapter.1}% 3
-\BOOKMARK [2][-]{subsection.1.2.1}{Message Passing}{section.1.2}% 4
-\BOOKMARK [0][-]{chapter.2}{Kalman Filtering}{}% 5
-\BOOKMARK [1][-]{section.2.1}{Part 1: Prediction}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.1.1}{Representation in canonical form}{section.2.1}% 7
-\BOOKMARK [2][-]{subsection.2.1.2}{Belief update}{section.2.1}% 8
-\BOOKMARK [1][-]{section.2.2}{Part 2: Measurement Update}{chapter.2}% 9
-\BOOKMARK [0][-]{section.2.2}{References}{}% 10
-\BOOKMARK [-1][-]{part*.15}{Appendix}{}% 11
-\BOOKMARK [0][-]{Appendix.a.A}{The Canonnical Form Representation}{part*.15}% 12
+\BOOKMARK [1][-]{section.1.1}{Bayes Net Representation}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Junction Tree Representation}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Junction Tree Construction: The HUGIN Algorithm}{section.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.2.2}{Message Passing: Integral-Product Algorithm}{section.1.2}% 5
+\BOOKMARK [0][-]{chapter.2}{Kalman Filtering}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Part 1: Prediction}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.1.1}{Canonical Form Representation}{section.2.1}% 8
+\BOOKMARK [2][-]{subsection.2.1.2}{Belief Update}{section.2.1}% 9
+\BOOKMARK [1][-]{section.2.2}{Part 2: Measurement Update}{chapter.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.1}{Canonical From Representation}{section.2.2}% 11
+\BOOKMARK [2][-]{subsection.2.2.2}{Update and Simplifications}{section.2.2}% 12
+\BOOKMARK [0][-]{remark.7}{References}{}% 13

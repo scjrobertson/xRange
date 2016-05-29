@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\begin{document}
+
+\begin{tikzpicture}[scale=1]
+
+\begin{scope}[every node/.style={circle,thick,draw}]
+
+	%Frame 1
+	\node (c_0) at (0, 0) {$\pmb{C}_{\pmb{x}(0)} \left( \pmb{x}_{0}^{1}, \pmb{x}_{0}^{2} \right)$};
+	\node (c_1) at (7.5, 0) {$\pmb{C}_{\pmb{x}(1)} \left( \pmb{x}_{0}^{1}, \pmb{x}_{0}^{2} ,\pmb{x}^{1}_{1}, \pmb{x}_{1}^{2} \right)$};
+	\node (c_2) at (7.5, -7.5) {$\pmb{C}_{\pmb{z}(1)}\left( \pmb{x}_{1}^{1}, \pmb{x}_{1}^{2}, \pmb{z}_{1}^{1}, \pmb{z}_{1}^{2} \right)$};
+		
+	%Frame 2
+	\node (c_3) at (15, 0) {$\pmb{C}_{\pmb{x}(2)} \left( \pmb{x}_{2}^{1}, \pmb{x}_{1}^{2} ,\pmb{x}^{2}_{1}, \pmb{x}_{2}^{2} \right)$};
+	\node (c_4) at (15, -7.5) {$\pmb{C}_{\pmb{z}(2)} \left( \pmb{x}_{1}^{2}, \pmb{x}_{2}^{2}, \pmb{z}_{2}^{1}, \pmb{z}_{2}^{2} ,a_{2} \right)$};
+
+\end{scope}
+
+\begin{scope}[every node/.style={thick,draw}]
+
+	%Frame 1
+	\node (s_0^1) at (3.75, 0) {$\pmb{x}_{0}^{1}, \pmb{x}_{0}^{2} $};
+	\node (s_1^2) at (7.5, -3.75) {$\pmb{x}_{1}^{1}, \pmb{x}_{1}^{2} $};
+	\node (s_1^3) at (11.25,  0) {$\pmb{x}_{1}^{1}, \pmb{x}_{1}^{2} $};
+	
+	%Frame 2	
+	\node (s_3^4) at (15, -3.75) {$\pmb{x}_{2}^{1}, \pmb{x}_{2}^{1} $};
+	\node (s_3^5) at (20, 0) {$\pmb{x}_{2}^{1}, \pmb{x}_{2}^{2} $};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	\node (xdots) at (22.5, 0) {\dots};
+\end{scope}
+
+
+\begin{scope}[style={thick,draw}]
+
+ %\Frame 1
+ \path [-] (c_0) edge node {} (s_0^1);
+ \path [-] (s_0^1) edge node {} (c_1);
+ 
+ \path [-] (c_1) edge node {} (s_1^2);
+ \path [-] (s_1^2) edge node {} (c_2);
+ 
+ \path [-] (c_1) edge node {} (s_1^3);
+ \path [-] (s_1^3) edge node {} (c_3);
+ 
+  %\Frame 1
+ \path [-] (c_3) edge node {} (s_3^4);
+ \path [-] (s_3^4) edge node {} (c_4);
+ 
+ \path [-] (c_3) edge node {} (s_3^5);
+ \path [-] (s_3^5) edge node {} (xdots);
+	
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

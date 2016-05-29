@@ -1,0 +1,5 @@
+\chapter{Triangulation by variable elimination}
+\label{chapter:triangulation}
+The variable elimination ordering used in triangulation determines the density of the induced graph. I have decided to include all the steps in the process for the elimination ordering  $\pmb{x}_{0}^{1}$, $\pmb{x}_{0}^{2}$, $\pmb{z}_{1}^{1}$, $\pmb{z}_{1}^{2}$, $a_{1}$, $\pmb{x}_{1}^{2}$, $\pmb{x}_{1}^{1}$ for first two frames, after which the ordering  $\pmb{z}_{t}^{1}$, $\pmb{z}_{t}^{2}$, $a_{t}$, $\pmb{x}_{t}^{2}$, $\pmb{x}_{t}^{1}$ can be used for each frame.
+
+\input{src/elim_1}

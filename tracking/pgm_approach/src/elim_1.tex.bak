@@ -1,0 +1,477 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_0^1) at (-1.25, 0) {$\pmb{x}_{0}^{1}$};
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (a_1) at (1.25, -2.5) {$a_{1}$};
+	\node (z_1^1) at (3.75, -1.25) {$\pmb{z}_{1}^{1}$};
+	\node (z_1^2) at (3.75, -3.75) {$\pmb{z}_{1}^{2}$};
+	
+	\node (x_0^2) at (-1.25, -5) {$\pmb{x}_{0}^{2}$};
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_0^1) edge node {} (x_1^1);
+	\path [-] (x_1^1) edge node {} (z_1^1);
+	\path [-] (x_1^1) edge node {} (z_1^2);
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	
+	\path [-] (a_1) edge node {} (z_1^1);
+	\path [-] (a_1) edge node {} (x_1^1);
+	\path [-] (a_1) edge node {} (z_1^2);
+	\path [-] (a_1) edge node {} (x_1^2);
+	
+	\path [-] (x_0^2) edge node {} (x_1^2);
+	\path [-] (x_1^2) edge node {} (z_1^1);
+	\path [-] (x_1^2) edge node {} (z_1^2);
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[The equivalent Markov Network.]{The moralised graph of Figure~\ref{figure:bayes_net}.}
+\label{figure:pre_elim}
+\end{figure}
+
+%elim_1
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (a_1) at (1.25, -2.5) {$a_{1}$};
+	\node (z_1^1) at (3.75, -1.25) {$\pmb{z}_{1}^{1}$};
+	\node (z_1^2) at (3.75, -3.75) {$\pmb{z}_{1}^{2}$};
+	
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_1^1) edge node {} (z_1^1);
+	\path [-] (x_1^1) edge node {} (z_1^2);
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	
+	\path [-] (a_1) edge node {} (z_1^1);
+	\path [-] (a_1) edge node {} (x_1^1);
+	\path [-] (a_1) edge node {} (z_1^2);
+	\path [-] (a_1) edge node {} (x_1^2);
+	
+	\path [-] (x_1^2) edge node {} (z_1^1);
+	\path [-] (x_1^2) edge node {} (z_1^2);
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $\pmb{x}_{0}^{1}$ and $\pmb{x}_{0}^{2}$ are eliminated.]{$\pmb{x}_{0}^{1}$ and $\pmb{x}_{0}^{2}$ are eliminated, this trivial and introduces no new fill edges into the induced graph.}
+\label{figure:elim_1}
+\end{figure}
+
+%elim_2
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (a_1) at (1.25, -2.5) {$a_{1}$};
+	\node (z_1^2) at (3.75, -3.75) {$\pmb{z}_{1}^{2}$};
+	
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_1^1) edge node {} (z_1^2);
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	
+	\path [-] (a_1) edge node {} (x_1^1);
+	\path [-] (a_1) edge node {} (z_1^2);
+	\path [-] (a_1) edge node {} (x_1^2);
+	
+	\path [-] (x_1^2) edge node {} (z_1^2);
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $\pmb{z}_{1}^{1}$ is eliminated.]{$\pmb{z}_{1}^{1}$ is eliminated, introducing no fill edges.}
+\label{figure:elim_2}
+\end{figure}
+
+%elim_3
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (a_1) at (1.25, -2.5) {$a_{1}$};
+	
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	
+	\path [-] (a_1) edge node {} (x_1^1);
+	\path [-] (a_1) edge node {} (x_1^2);
+	
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $\pmb{z}_{1}^{2}$ is eliminated.]{$\pmb{z}_{1}^{2}$ is eliminated, introducing no fill edges.}
+\label{figure:elim_3}
+\end{figure}
+
+%elim_3
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $a_{t}$ is eliminated.]{$a_{t}$ is eliminated, introducing no fill edges.}
+\label{figure:elim_4}
+\end{figure}
+
+%elim_5
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	\path [bend right] (x_1^1) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $\pmb{x}_{1}^{2}$ is eliminated.]{$\pmb{x}_{1}^{2}$ is eliminated, introducing the fill edge $\pmb{x}_{1}^{1} - \pmb{x}_{2}^{2}$.}
+\label{figure:elim_5}
+\end{figure}
+
+%elim_6
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[ $\pmb{x}_{1}^{1}$ is eliminated.]{$\pmb{x}_{1}^{1}$ is eliminated, introducing no fill edges. The graph has the same form as Figure~\ref{figure:elim_1}, apply the same process as before until the end of time.}
+\label{figure:elim_6}
+\end{figure}
+
+%Induced
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw}]
+	%Frame 1
+	\node (x_0^1) at (-1.25, 0) {$\pmb{x}_{0}^{1}$};
+	\node (x_1^1) at (2.5, 0) {$\pmb{x}_{1}^{1}$};
+	
+	\node (a_1) at (1.25, -2.5) {$a_{1}$};
+	\node (z_1^1) at (3.75, -1.25) {$\pmb{z}_{1}^{1}$};
+	\node (z_1^2) at (3.75, -3.75) {$\pmb{z}_{1}^{2}$};
+	
+	\node (x_0^2) at (-1.25, -5) {$\pmb{x}_{0}^{2}$};
+	\node (x_1^2) at (2.5, -5) {$\pmb{x}_{1}^{2}$};
+	
+	%Frame 2
+	\node (x_2^1) at (6.25, 0) {$\pmb{x}_{2}^{1}$};
+	
+	\node (a_2) at (5, -2.5) {$a_{2}$};
+	\node (z_2^1) at (7.5, -1.25) {$\pmb{z}_{2}^{1}$};
+	\node (z_2^2) at (7.5, -3.75) {$\pmb{z}_{2}^{2}$};
+	
+	\node (x_2^2) at (6.25, -5) {$\pmb{x}_{2}^{2}$};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+    \node (xdot1) at (10, 0) {\dots};
+    \node (xdot2) at (10, -5) {\dots};
+\end{scope}
+
+\begin{scope}[style={thick,draw}]
+	%Frame 1
+	\path [-] (x_0^1) edge node {} (x_1^1);
+	\path [-] (x_1^1) edge node {} (z_1^1);
+	\path [-] (x_1^1) edge node {} (z_1^2);
+	\path [-] (x_1^1) edge node {} (x_1^2);
+	\path [-] (x_1^1) edge node {} (x_2^1);
+	
+	\path [-] (a_1) edge node {} (z_1^1);
+	\path [-] (a_1) edge node {} (x_1^1);
+	\path [-] (a_1) edge node {} (z_1^2);
+	\path [-] (a_1) edge node {} (x_1^2);
+	
+	\path [-] (x_0^2) edge node {} (x_1^2);
+	\path [-] (x_1^2) edge node {} (z_1^1);
+	\path [-] (x_1^2) edge node {} (z_1^2);
+	\path [-] (x_1^2) edge node {} (x_2^2);
+	
+	%Frame 2
+	\path [-] (x_2^1) edge node {} (z_2^1);
+	\path [-] (x_2^1) edge node {} (z_2^2);
+	\path [-] (x_2^1) edge node {} (x_2^2);
+	\path [-] (x_2^1) edge node {} (xdot1);
+	
+	\path [-] (a_2) edge node {} (z_2^1);
+	\path [-] (a_2) edge node {} (x_2^1);
+	\path [-] (a_2) edge node {} (z_2^2);
+	\path [-] (a_2) edge node {} (x_2^2);
+	
+	\path [bend right] (x_2^2) edge node {} (x_1^1);
+	\path [-] (x_2^2) edge node {} (z_2^1);
+	\path [-] (x_2^2) edge node {} (z_2^2);
+	\path [-] (x_2^2) edge node {} (xdot2);
+\end{scope}
+
+\end{tikzpicture}
+
+\caption[The graph induced by variable elimination.]{The graph induced by variable elimination. }
+\label{figure:induced_app}
+\end{figure}

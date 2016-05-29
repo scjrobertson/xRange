@@ -96,7 +96,7 @@ class KalmanFilter(object):
         K_t = sig_bar@(C_t.T)@innov
 
         #Measurement update
-        mu_t = mu_bar + K_t@(z_t - C_t@mu_bar)
-        sig_t = (I - K_t@C_t)@(sig_bar.T)
+        self.mu_t = mu_bar + K_t@(z_t - C_t@mu_bar)
+        self.sig_t = (I - K_t@C_t)@(sig_bar.T)
 
         return mu_t

@@ -1,0 +1,40 @@
+\documentclass[11pt,a4paper,notitlepage]{report}
+\usepackage[margin = 2.54 cm]{geometry}
+\input{src/preamble}
+\pagestyle{fancy}
+
+\begin{document}
+
+\begingroup
+\let\clearpage\relax
+
+	\input{src/title}
+	
+	\input{src/abstract}
+	
+	\input{src/toc}
+	
+	%\input{src/introduction}
+	
+	\input{src/simple_system}
+	
+	\input{src/analysis}
+	
+\endgroup
+
+	%\newpage
+	%\addcontentsline{toc}{chapter}{References}
+	%\bibliographystyle{plain}
+	%\bibliography{thebibliography}{}
+	
+	%Appendices
+	%\newpage
+	%\part*{Appendix}
+	%\addcontentsline{toc}{part}{Appendix}
+	%\label{part:appendices}
+	
+	%\begin{appendices}
+		%Chapters included in the appendices will automatically be listed alphabetically - Eg
+	%\end{appendices}
+
+\end{document}

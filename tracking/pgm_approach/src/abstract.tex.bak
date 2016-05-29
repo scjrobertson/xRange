@@ -1,0 +1,6 @@
+\begin{center}
+\section*{Introduction}
+\end{center}
+This is an investigation of a two object tracking problem. The system is first represented as a Bayes Net, before a Junction Tree is constructed and the initial time steps of the system investigated.
+
+Writing anything I don't hate is nearly impossible, so this  is mostly equations tied together with some string. The notation is still all over the place and there are probably a few copy and paste errors.

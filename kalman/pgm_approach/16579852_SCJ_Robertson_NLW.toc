@@ -1,14 +1,14 @@
 \contentsline {chapter}{\numberline {1}Linear Gaussian Systems}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Bayes Net Representation}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Junction Tree Representation}{3}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Junction Tree Construction: The Hugin Algorithm}{3}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.1}Junction Tree Construction: The HUGIN Algorithm}{3}{subsection.1.2.1}
 \contentsline {subsubsection}{Application to the Kalman Filter}{3}{section*.9}
 \contentsline {subsection}{\numberline {1.2.2}Message Passing: Integral-Product Algorithm}{4}{subsection.1.2.2}
 \contentsline {chapter}{\numberline {2}Kalman Filtering}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}Part 1: Prediction}{4}{section.2.1}
+\contentsline {section}{\numberline {2.1}Part 1: Prediction}{5}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Canonical Form Representation}{5}{subsection.2.1.1}
-\contentsline {subsubsection}{The Initial Belief, $\phi _{\pmb {x}_t} (\pmb {x}_{t}, \pmb {x}_{t-1})$}{5}{section*.12}
-\contentsline {subsubsection}{The Recursive Belief, $\delta _{\phi _{\pmb {x}_{t-1}} \rightarrow \phi _{\pmb {x}_{t}}} (\pmb {x}_{t-1})$}{6}{section*.13}
+\contentsline {subsubsection}{The Initial Belief, $\phi _{\pmb {x}(t)} (\pmb {x}_{t}, \pmb {x}_{t-1})$}{5}{section*.12}
+\contentsline {subsubsection}{The Recursive Belief, $\delta _{\pmb {x}(t-1) \rightarrow \pmb {x}(t)} (\pmb {x}_{t-1})$}{6}{section*.13}
 \contentsline {subsection}{\numberline {2.1.2}Belief Update}{6}{subsection.2.1.2}
 \contentsline {subsubsection}{Marginalisation}{7}{section*.14}
 \contentsline {subsubsection}{Simplifications}{7}{section*.15}

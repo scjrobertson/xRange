@@ -1,0 +1,91 @@
+%Font types
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{textcomp}
+\usepackage{mdframed}
+
+%Page layout
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{fancyhdr}
+\fancyhf{}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+%Date and time
+\usepackage[nodayofweek]{datetime}
+\newdateformat{mmyy}{{}\monthname[\THEMONTH]{} \THEYEAR}
+
+%Chapter headings that look sections
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+\par\vspace*{15 pt}%
+{\setlength{\parindent}{0pt} \raggedright \normalfont
+\bfseries\LARGE\thechapter.\ #1
+\par\nobreak\vspace{10 pt}}}
+\makeatother
+
+%Appendixes
+\usepackage{appendix}
+
+
+%Code listings
+\usepackage{color}
+\usepackage{listings}
+\usepackage{setspace}
+
+%Tables and enumiration 
+\usepackage{tabularx}
+\usepackage{supertabular}
+\usepackage{blindtext}
+\usepackage{array}
+\usepackage{enumitem}
+
+%Float types
+\usepackage{float}
+\usepackage{newfloat}
+
+%Graphics and captioning options
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{caption,subcaption}
+
+%Watermarking for title page, remove "firstpage" to extend to whole document
+%\usepackage[firstpage]{draftwatermark}
+%\SetWatermarkAngle{0}
+%\SetWatermarkText{\includegraphics[scale=1.5]{images/UScrest-top.jpg}}
+
+%Hyperlinks to equations,images and references
+\usepackage{cite}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linktoc=all,     
+    linkcolor=black, 
+    citecolor = black,
+}
+
+%Tikz, plotting images
+\usepackage{tikz}
+\usepackage{tikz-dependency}
+
+%Change bibliography name to References
+\renewcommand\bibname{References}
+
+%Declare an example float type
+\DeclareFloatingEnvironment[fileext=frm,placement={h},name=Example]{example}
+\captionsetup[example]{}
+
+%Tikz settings for trees
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes, calc} 
+
+%Box for theorems
+\newmdtheoremenv{theo}{Lemma}
+\newmdtheoremenv{remark}{Remark}
+\newmdtheoremenv{definition}{Definition}
+
+%Number a single equation in align*
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
