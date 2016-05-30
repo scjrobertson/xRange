@@ -7,6 +7,7 @@ and some helper functions.
 """
 
 import numpy as np
+import numbers
 
 class CanonicalGaussian:
     '''
@@ -17,6 +18,11 @@ class CanonicalGaussian:
     to align variables and expand scopes. This is computationally
     expensive, but conceptually easy. Not a great representation, but
     I couldn't find an exisiting canonical form representation in python.
+
+    Multiplication and division have been overloaded, but this in general
+    quite confusing as it will only be consistent when applied to 
+    CanonicalGaussians. Rather replace it with multiply() and divide()
+    methods to reduce error.
 
     This class doesn't yet handle any value errors or check
     dimensional consistency.
@@ -130,12 +136,13 @@ class CanonicalGaussian:
         A = np.zeros((sum(glob_dims), sum(self._dims)))
 
         columns = np.cumsum(([0] + self._dims[:-1])).tolist()
-        rows = np.cumsum(([0] + glob_dims[:-1])).tolist()
+        glob_rows = np.cumsum(([0] + glob_dims[:-1])).tolist()
+        rows = []
 
         for i in np.arange(0, len(glob_vars)):
-            if glob_vars[i] not in self._vars:
-                rows.pop(i)
-
+            if glob_vars[i] in self._vars:
+                rows.append(glob_rows[i])
+                
         for r, c, d in zip(rows, columns, self._dims):
             A[r:r+d, c:c+d] = np.identity(d)
 
@@ -234,14 +241,15 @@ class CanonicalGaussian:
         if isinstance(C, CanonicalGaussian):
             map_ = dict(zip(self._vars + C._vars, self._dims + C._dims))
             glob_vars, glob_dims = list(map_.keys()), list(map_.values())
-
+            
             K_1, h_1 = self._expand_scope(glob_vars, glob_dims)
             K_2, h_2 = C._expand_scope(glob_vars, glob_dims)
-
+            
             return CanonicalGaussian(glob_vars, glob_dims, h_1 + h_2, K_1 + K_2, self._norm + C._norm)
-        else:
+        elif isinstance(C, numbers.Real):
             return CanonicalGaussian(self._vars, self._dims, self._info, self._prec, self._norm + np.log(C))
-
+        elif isinstance(C, object):
+            return C.__mul__(self)
 
     def __rmul__(self, C):
         '''
