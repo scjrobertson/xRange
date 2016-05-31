@@ -59,8 +59,8 @@ class CanonicalGaussian:
         
         self._info = np.array(info).reshape((sum(dims), 1))
         self._prec = np.array(prec)
-        self._norm = norm
-        
+        self._norm = np.float64(norm)
+
         if sorted(vars_) != vars_:
             self._order()
 
@@ -187,7 +187,7 @@ class CanonicalGaussian:
 
         self._order()
 
-        return CanonicalGaussian(vars_, dims, h_prime, K_prime, g_prime)
+        return CanonicalGaussian(vars_, dims, h_prime, K_prime, np.float64(g_prime))
 
     def introduce_evidence(self, vars_, ev):
         '''
@@ -220,7 +220,7 @@ class CanonicalGaussian:
 
         self._prec = K_xx
         self._info = h_x - (K_xy)@(ev)
-        self._norm += (h_y.T)@(ev) - 0.5*(ev.T)@(K_yy)@(ev)
+        self._norm += np.float64((h_y.T)@(ev) + 0.5*(ev.T)@(K_yy)@(ev))
 
         self._order()
 

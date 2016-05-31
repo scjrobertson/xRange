@@ -72,10 +72,7 @@ class GaussianMixtureModel:
         mixture = []
         if isinstance(gmm, CanonicalGaussian): mixture = [gmm]
         elif isinstance(gmm, GaussianMixtureModel): mixture = gmm._mix
-        product = []
-        for g in self._mix:
-            for m in mixture:
-               product.append(g*m)
+        product = [g*m for g in self._mix for m in mixture]
         return GaussianMixtureModel(product)
 
     def __rmul__(self, gmm):
