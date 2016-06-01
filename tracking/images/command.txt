@@ -1,0 +1,2 @@
+convert -delay 50 $(for i in $(seq 0 1 14); do echo ${i}.png; done) -loop 0 name.gif
+
