@@ -183,7 +183,7 @@ class CanonicalGaussian:
 
         K_prime = K_xx - (K_xy)@(K_yy)@(K_yx)
         h_prime = h_x - (K_xy)@(K_yy)@(h_y)
-        g_prime = self._norm + 0.5*( np.log(np.linalg.det(2*np.pi*K_yy )) + (h_y.T)@(K_yy)@(h_y) )
+        g_prime = self._norm + 0.5*( np.log(np.linalg.det(2*np.pi*K_yy)) + (h_y.T)@(K_yy)@(h_y) )
 
         self._order()
 
@@ -220,7 +220,7 @@ class CanonicalGaussian:
 
         self._prec = K_xx
         self._info = h_x - (K_xy)@(ev)
-        self._norm += np.float64((h_y.T)@(ev) + 0.5*(ev.T)@(K_yy)@(ev))
+        self._norm += np.float64((h_y.T)@(ev) - 0.5*(ev.T)@(K_yy)@(ev))
 
         self._order()
 

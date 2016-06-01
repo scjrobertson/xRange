@@ -8,7 +8,6 @@ a basic (linear) Kalman Filter.
 import numpy as np
 
 class KalmanFilter(object):
-
     """
     Class for representing and implementing a (linear) Kalman filter.
     Currently does raise any exceptions!
@@ -98,5 +97,9 @@ class KalmanFilter(object):
         #Measurement update
         self.mu_t = mu_bar + K_t@(z_t - C_t@mu_bar)
         self.sig_t = (I - K_t@C_t)@(sig_bar.T)
+        
+        #k = -0.5*(self.mu_t.T)@(np.linalg.inv(self.sig_t))@(self.mu_t) 
+        #-0.5*np.log(np.linalg.det(2*np.pi*self.sig_t))
+        #print(np.float64(k))
 
         return mu_t
